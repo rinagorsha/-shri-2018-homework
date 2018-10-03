@@ -1,0 +1,72 @@
+body
+  color $textColor
+  font-family Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Helvetica, sans-serif
+  font-size 20px
+  font-weight 400
+  line-height 1.16
+  -webkit-font-smoothing antialiased // mac fix
+  -webkit-text-stroke 1px transparent // mac fix
+  -webkit-text-size-adjust 100% // stop iphone resize when orientation landscape
+
+h1, .h1
+  font-size 36px
+  font-weight 700
+  margin-top 20px
+  margin-bottom 20px
+
+h2, .h2
+  font-size 27px
+  font-weight 700
+  margin-top 40px
+  margin-bottom 20px
+  @media $mobile
+    font-size 18px
+
+h3, .h3
+  font-size 18px
+  font-weight 700
+  margin-top 30px
+  margin-bottom 20px
+
+h4, .h4
+  font-size 16px
+  margin-top 20px
+  margin-bottom 20px
+
+h5, .h5
+  font-weight 700
+  margin-top 20px
+  margin-bottom 20px
+
+h6, .h6
+  margin-top 20px
+  margin-bottom 20px
+
+p
+  margin-top 20px
+  margin-bottom 20px
+ul, ol
+  padding-left 40px
+  margin-top 20px
+  margin-bottom 20px
+b, strong
+  font-weight 700
+i, em
+  font-style italic
+sup
+  font-size 85%
+  line-height 0
+  vertical-align baseline
+  position relative
+  top -.45em
+sub
+  font-size 85%
+  line-height 0
+  vertical-align baseline
+  position relative
+  top .2em
+u
+  text-decoration underline
+
+code
+  font-family monospace

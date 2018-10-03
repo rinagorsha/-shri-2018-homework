@@ -1,0 +1,22 @@
+.nav-header
+  font-size 16px
+  color alpha($textColor, .6)
+  &__item
+    color inherit
+    font-weight 700
+    text-decoration none
+    margin-right 27px
+    &:last-child
+      margin-right 0
+
+    &_active,
+    body:not(.user-is-touching) &:hover
+      color $textColor
+
+.nav-footer
+  &__item
+    color inherit
+    text-decoration none
+    display inline-block
+    & + &
+      margin-left 17px

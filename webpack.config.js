@@ -1,8 +1,10 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const data = require('./events.json');
 
 module.exports = (env, argv) => {
-  const isProduction = argv.mode === 'development';
+  const isProduction = argv.mode === 'production';
 
   return ({
     entry: [
@@ -60,6 +62,7 @@ module.exports = (env, argv) => {
               loader: 'pug-html-loader',
               options: {
                 pretty: true,
+                data,
               },
             },
           ],
@@ -88,6 +91,9 @@ module.exports = (env, argv) => {
         verbose: true,
         dry: false,
       }),
+    new CopyWebpackPlugin([
+      {from: 'src/images/', to: 'images'},
+    ]),
     ],
     devServer: {
       open: true,

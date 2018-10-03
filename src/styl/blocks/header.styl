@@ -1,0 +1,35 @@
+.header
+  width 100%
+  padding 33px 40px 35px
+  background-color #fff
+  border-bottom 1px solid #f0f0f0
+  display flex
+  align-items center
+  flex 0 0 auto
+  z-index 10
+  position fixed
+  top 0
+  left 0
+  @media $mobile
+    border-bottom none
+    padding 20px
+    justify-content space-between
+
+  &__logo
+    margin-right 50px
+    flex 0 0 auto
+
+  &__nav
+    margin-top 5px
+    flex 0 1 auto
+    @media $mobile
+      display none
+
+  &__menu
+    width 16px
+    height 16px
+    background-size contain
+    display inline-block
+    vertical-align middle
+    @media $more-mobile
+      display none

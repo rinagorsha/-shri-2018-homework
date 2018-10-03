@@ -1,0 +1,39 @@
+mixin panel(item)
+  .panel(class=[
+    `panel_${item.size}`,
+    `panel_${item.type}`,
+    attributes.class,
+  ])
+    .panel__header
+      .panel__title
+        .panel__icon
+          .icon(class={
+            [`icon_${item.icon}`]: true,
+            [`icon_${item.icon}_active`]: item.type === 'critical',
+          })
+        .panel__name= item.title
+      .panel__info
+        div= item.source
+        div= item.time
+    .panel__content
+      .panel__text= item.description
+
+      if item.data && item.data.type == 'graph'
+        img.panel__image(src="images/graph.png" alt=item.title)
+
+      if item.data && item.data.buttons
+        for button in item.data.buttons
+          button.button.panel__button(class={
+            'button_gray': button === 'Нет',
+          })
+            | #{button}
+
+      if item.data && item.data.image
+        picture
+          img.panel__image(src="images/image.png" alt=item.title)
+
+      .panel__info
+        if item.data && item.data.temperature
+          div Температура: #[b #{item.data.temperature} C]
+        if item.data && item.data.humidity
+          div Влажность: #[b #{item.data.humidity}%]

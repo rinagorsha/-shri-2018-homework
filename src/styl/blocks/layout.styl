@@ -1,0 +1,13 @@
+.layout
+  display grid
+  grid-template-columns repeat(6, 1fr)
+  grid-gap 20px
+
+  &__item
+    &_s
+      grid-column: span 2
+    &_m
+      grid-column: span 3
+    &_l
+      grid-column: span 4
+      grid-row: span 3

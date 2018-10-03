@@ -1,3 +1,5 @@
+include panel
+
 doctype html
 html(lang="ru")
   head
@@ -6,7 +8,26 @@ html(lang="ru")
     meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
     link(rel="stylesheet", href="main.css")
   body
+    header.header
+      .header__logo
+        a.logo(href="#") Яндекс Дом
+      .header__nav
+        nav.nav-header
+          a.nav-header__item.nav-header__item_active(href="#") Сводка
+          a.nav-header__item(href="#") Устройства
+          a.nav-header__item(href="#") Сценарии
+      button.header__menu.js-menu-button(type="button")
+
     main.main
       block content
+
+    footer.footer
+      .footer__nav
+        nav.nav-footer
+          a.nav-footer__item(href="#") Помощь
+          a.nav-footer__item(href="#") Обратная связь
+          a.nav-footer__item(href="#") Разработчикам
+          a.nav-footer__item(href="#") Условия использования
+      .footer__copyright © 2001-2017 ООО «Яндекс»
 
     script(type="text/javascript", src="main.js", async="async")
