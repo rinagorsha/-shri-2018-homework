@@ -1,4 +1,6 @@
 mixin panel(item)
+  - var iconName = `${item.icon}${item.type === 'critical' ? '-white' : ''}`
+
   .panel(class=[
     `panel_${item.size}`,
     `panel_${item.type}`,
@@ -6,34 +8,54 @@ mixin panel(item)
   ])
     .panel__header
       .panel__title
-        .panel__icon
-          .icon(class={
-            [`icon_${item.icon}`]: true,
-            [`icon_${item.icon}_active`]: item.type === 'critical',
-          })
+        img.panel__icon(src=`images/icons/${iconName}.svg`)
         .panel__name= item.title
-      .panel__info
-        div= item.source
-        div= item.time
-    .panel__content
-      .panel__text= item.description
+      .panel-info(class=`panel-info_${item.size}`)
+        .panel-info__item= item.source
+        .panel-info__item= item.time
 
-      if item.data && item.data.type == 'graph'
-        img.panel__image(src="images/graph.png" alt=item.title)
+    if item.description || item.data
+      .panel__content
+        .panel__line
+          .panel__text= item.description
+        
+        if item.data && item.data.track
+          .panel__line
+            .player.panel__player
+              .player__header
+                .player__picture(style={'background-image': `url(${item.data.albumcover})`})
+                .player__info
+                  .player__name #{item.data.artist} - #{item.data.track.name}
+                  .player__duration
+                    input.player__track(type="range")
+                    .player__value #{item.data.track.length}
+              .player__controls
+                button.player__button.player__button_prev(type="button")
+                button.player__button.player__button_next(type="button")
+                input.player__volume(type="range" value=item.data.volume)
+                .player__value #{item.data.volume}%
 
-      if item.data && item.data.buttons
-        for button in item.data.buttons
-          button.button.panel__button(class={
-            'button_gray': button === 'Нет',
-          })
-            | #{button}
+        if item.data && item.data.type == 'graph'
+          .panel__line
+            img.panel__image(src="images/graph.png" alt=item.title)
 
-      if item.data && item.data.image
-        picture
-          img.panel__image(src="images/image.png" alt=item.title)
+        if item.data && item.data.buttons
+          .panel__line
+            for button in item.data.buttons
+              button.button.panel__button(class={
+                'button_gray': button === 'Нет',
+              })
+                | #{button}
 
-      .panel__info
-        if item.data && item.data.temperature
-          div Температура: #[b #{item.data.temperature} C]
-        if item.data && item.data.humidity
-          div Влажность: #[b #{item.data.humidity}%]
+        if item.data && item.data.image
+          picture.panel__line
+            img.panel__image(src="images/image.png" alt=item.title)
+
+        if item.data && (item.data.humidity || item.data.temperature)
+          .panel__line
+            .panel__info
+              .panel-info(class=`panel-info_${item.size}`)
+                if item.data && item.data.temperature
+                  .panel-info__item Температура: #[b #{item.data.temperature} C]
+                if item.data && item.data.humidity
+                  .panel-info__item Влажность: #[b #{item.data.humidity}%]

@@ -1,0 +1,36 @@
+input-range(handleMixin, trackMixin)
+  width 100%
+  height 0
+  position relative
+  top 2px
+  -webkit-appearance none
+
+  &::-webkit-slider-thumb
+    -webkit-appearance none
+    handleMixin()
+
+  &::-moz-range-thumb
+    handleMixin()
+
+  &::-ms-thumb
+    handleMixin()
+
+  &::-webkit-slider-runnable-track
+    trackMixin()
+
+  &::-moz-range-track
+    trackMixin()
+
+  &::-ms-track
+    trackMixin()
+
+  &:focus
+    background none
+    outline none
+
+  &::-ms-track
+    width 100%
+    cursor pointer
+    background transparent
+    border-color transparent
+    color transparent
