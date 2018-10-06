@@ -24,6 +24,13 @@ mixin panel(item)
         .panel__line
           .panel__text= item.description
         
+        if item.data && item.data.image
+          .panel__line
+            .camera.js-camera
+              .panel__containere
+                .camera__image.js-camera-image
+                //- img.panel-camera__image.js-camera-image(src="images/image.png" alt=item.title)
+        
         if item.data && item.data.track
           .panel__line
             .player.panel__player
@@ -52,10 +59,6 @@ mixin panel(item)
                   'button_gray': button === 'Нет',
                 })
                   | #{button}
-
-        if item.data && item.data.image
-          picture.panel__line
-            img.panel__image(src="images/image.png" alt=item.title)
 
         if item.data && (item.data.humidity || item.data.temperature)
           .panel__line
