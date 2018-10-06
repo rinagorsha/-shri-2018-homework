@@ -41,11 +41,12 @@ mixin panel(item)
 
         if item.data && item.data.buttons
           .panel__line
-            for button in item.data.buttons
-              button.button.panel__button(class={
-                'button_gray': button === 'Нет',
-              })
-                | #{button}
+            .panel__buttons
+              for button in item.data.buttons
+                button.button.panel__button(class={
+                  'button_gray': button === 'Нет',
+                })
+                  | #{button}
 
         if item.data && item.data.image
           picture.panel__line
@@ -59,3 +60,18 @@ mixin panel(item)
                   .panel-info__item Температура: #[b #{item.data.temperature} C]
                 if item.data && item.data.humidity
                   .panel-info__item Влажность: #[b #{item.data.humidity}%]
+
+    button.panel__action.panel__action_arrow(
+      type="button"
+      title="Раскрыть событие"
+      class={
+        'panel__action_arrow-critical': item.type === 'critical' && !(item.data || item.description)
+      }
+    )
+    button.panel__action.panel__action_close(
+      type="button"
+      title="Удалить событие"
+      class={
+        'panel__action_close-critical': item.type === 'critical'
+      }
+    )

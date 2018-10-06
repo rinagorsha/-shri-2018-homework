@@ -10,7 +10,12 @@
   flex 0 1 auto
   cursor pointer
   transition background-color .3s ease
+  @media $mobile
+    padding-top 11px
+    padding-bottom 11px
+
   body:not(.user-is-touching) &:hover
     background-color $yellowDark
+
   &_gray
     background-color $grayDarkest
