@@ -26,10 +26,13 @@ mixin panel(item)
         
         if item.data && item.data.image
           .panel__line
-            .camera.js-camera
-              .panel__containere
+            .camera.js-camera(touch-action="none")
+              .camera__container
                 .camera__image.js-camera-image
-                //- img.panel-camera__image.js-camera-image(src="images/image.png" alt=item.title)
+              .camera__info
+                .panel-info
+                  .panel-info__item Приближение: #[span.js-camera-scale 100%]
+                  .panel-info__item Яркость: #[b.js-camera-brightness 100%]
         
         if item.data && item.data.track
           .panel__line
@@ -62,12 +65,11 @@ mixin panel(item)
 
         if item.data && (item.data.humidity || item.data.temperature)
           .panel__line
-            .panel__info
-              .panel-info.panel-info_temperature(class=`panel-info_${item.size}`)
-                if item.data && item.data.temperature
-                  .panel-info__item Температура: #[b #{item.data.temperature} C]
-                if item.data && item.data.humidity
-                  .panel-info__item Влажность: #[b #{item.data.humidity}%]
+            .panel-info.panel-info_temperature(class=`panel-info_${item.size}`)
+              if item.data && item.data.temperature
+                .panel-info__item Температура: #[b #{item.data.temperature} C]
+              if item.data && item.data.humidity
+                .panel-info__item Влажность: #[b #{item.data.humidity}%]
 
     button.panel__action.panel__action_arrow(
       type="button"
