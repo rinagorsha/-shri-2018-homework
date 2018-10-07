@@ -8,6 +8,9 @@ icons = stats key robot-cleaner router thermal ac music fridge battery cam kettl
   background-size contain
   vertical-align middle
   display inline-block
+  @media $mobile
+    width 35px
+    height @width
 
   for icon in icons
     &_{icon}

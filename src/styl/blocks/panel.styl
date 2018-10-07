@@ -16,6 +16,9 @@
       box-shadow 0 2px 6px alpha(#c5baba, .5)
   &_critical
     background-color $red
+    &.panel_has-content
+      border-bottom-left-radius 30px
+      border-bottom-right-radius 30px
     &:hover
       background-color $red
   &_l
@@ -54,7 +57,7 @@
   &__line
     margin-bottom 20px
     @media $mobile
-      margin-top 16px
+      margin-bottom 16px
     &:last-child
       margin-top auto
       margin-bottom 0
@@ -65,6 +68,8 @@
     display flex
     align-items center
     margin-bottom 20px
+    @media $title
+      font-size 22px
     @media $mobile
       font-size 14px
       margin-bottom 16px
@@ -73,12 +78,9 @@
     flex 0 0 auto
     margin-right 20px
     @media $mobile
-      width 35px
-      height @width
       margin-right 16px
 
   &__name
-    // max-height 2.5em
     overflow hidden
     flex 0 1 auto
   
@@ -111,6 +113,8 @@
     visibility hidden
     transition all .3s ease
     cursor pointer
+    body.is-touch-device &
+      display none
     @media $mobie
       display none
 
@@ -146,6 +150,8 @@
   justify-content space-between
   align-items center
   flex-wrap wrap
+  @media $tablet
+    font-size 16px
   @media $mobile
     font-size 12px
   &_s

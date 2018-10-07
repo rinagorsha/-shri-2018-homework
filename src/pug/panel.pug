@@ -5,6 +5,7 @@ mixin panel(item)
     `panel_${item.size}`,
     `panel_${item.type}`,
     attributes.class,
+    {'panel_has-content': item.description || item.data}
   ])
     .panel__header
       .panel__title
