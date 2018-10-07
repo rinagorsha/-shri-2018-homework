@@ -60,7 +60,7 @@ mixin panel(item)
         if item.data && (item.data.humidity || item.data.temperature)
           .panel__line
             .panel__info
-              .panel-info(class=`panel-info_${item.size}`)
+              .panel-info.panel-info_temperature(class=`panel-info_${item.size}`)
                 if item.data && item.data.temperature
                   .panel-info__item Температура: #[b #{item.data.temperature} C]
                 if item.data && item.data.humidity
