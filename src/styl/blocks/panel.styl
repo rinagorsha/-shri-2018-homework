@@ -10,12 +10,13 @@
   align-items stretch
   flex-direction column
   transition all .3s ease
-  body:not(.user-is-touching) &:hover
-    background-color $grayDark
-    box-shadow 0 2px 6px alpha(#c5baba, .5)
+  &:hover
+    @media $more-mobile
+      background-color $grayDark
+      box-shadow 0 2px 6px alpha(#c5baba, .5)
   &_critical
     background-color $red
-    body:not(.user-is-touching) &:hover
+    &:hover
       background-color $red
   &_l
     @media $more-tablet
@@ -39,8 +40,9 @@
     align-items stretch
     flex-direction column
     transition background-color .3s ease
-    body:not(.user-is-touching) .panel:hover &
-      background-color $grayDark
+    .panel:hover &
+      @media $more-mobile
+        background-color $grayDark
     @media $mobile
       padding 16px
       padding-top 0
@@ -76,6 +78,8 @@
       margin-right 16px
 
   &__name
+    // max-height 2.5em
+    overflow hidden
     flex 0 1 auto
   
   &__player
@@ -84,8 +88,9 @@
   &__buttons
     display grid
     grid-template-columns repeat(auto-fit, 130px)
-    justify-content space-between
     grid-gap 20px
+    @media $mobile
+      justify-content space-between
 
   &__image
     width 100%
@@ -106,22 +111,31 @@
     visibility hidden
     transition all .3s ease
     cursor pointer
+    @media $mobie
+      display none
+
     &_arrow
       bottom 15px
       background-image url(../images/next.svg)
       box-shadow box-shadow-params $grayDark
+      @media $tablet
+        bottom 6px
       &-critical
         background-color $red
         background-image url(../images/next-white.svg)
         box-shadow box-shadow-params $red
+
     &_close
       top 15px
       background-image url(../images/cross.svg)
       box-shadow box-shadow-params $grayDark
+      @media $tablet
+        top 6px
       &-critical
         background-color $red
         background-image url(../images/cross-white.svg)
         box-shadow box-shadow-params $red
+
     .panel:hover &
       visibility visible
       opacity 1

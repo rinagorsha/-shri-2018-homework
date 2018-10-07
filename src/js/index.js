@@ -18,3 +18,28 @@
     window.removeEventListener('touchstart', onFirstTouch, false);
   });
 })();
+
+/**
+ * Обрезает заголовки
+ */
+(() => {
+  const titles = document.querySelectorAll('.js-truncate');
+
+  truncate();
+  window.addEventListener('resize', truncate);
+
+  function truncate() {
+    for (let i = 0; i < titles.length; i++) {
+      const item = titles[i];
+      const maxHeight = parseInt(getComputedStyle(item).lineHeight, 10) * 2.5;
+      let text = item.dataset.original
+      item.textContent = text;
+      text = text.split(' ');
+
+      while (item.offsetHeight > maxHeight) {
+        text.pop();
+        item.textContent = text.join(' ') + '...';
+      }
+    }
+  }
+})();

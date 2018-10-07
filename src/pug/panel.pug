@@ -8,8 +8,12 @@ mixin panel(item)
   ])
     .panel__header
       .panel__title
-        img.panel__icon(src=`images/icons/${iconName}.svg`)
-        .panel__name= item.title
+        .panel__icon
+          .icon(class={
+            [`icon_${item.icon}`]: true,
+            [`icon_${item.icon}_active`]: item.type === 'critical',
+          })
+        .panel__name.js-truncate(data-original=item.title)= item.title
       .panel-info(class=`panel-info_${item.size}`)
         .panel-info__item= item.source
         .panel-info__item= item.time
