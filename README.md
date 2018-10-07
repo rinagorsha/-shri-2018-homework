@@ -3,7 +3,7 @@
 
 ## Демо
 Онлайн демонстрация
-[rinagorsha.github.io/shri-2018-homework/hw1](rinagorsha.github.io/shri-2018-homework/hw1)
+[https://rinagorsha.github.io/shri-2018-homework/hw1](https://rinagorsha.github.io/shri-2018-homework/hw1)
 
 #### Локальный сервер
 ```
