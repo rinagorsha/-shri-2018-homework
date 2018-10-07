@@ -1,17 +1,30 @@
 .camera
-  height 430px
-  overflow hidden
-  border-radius 20px
-  position relative
   display block
   touch-action none
+
   &__container
+    overflow hidden
+    border-radius 20px
+    position relative
     touch-action manipulation
+
   &__image
-    width auto
-    min-width 100%
-    min-height 100%
-    background url(../images/image.png) 50% no-repeat
-    position absolute
-    top 0
-    left 0
+    height 420px
+    background-image url(../images/image3x.png)
+    background-size cover
+    @media $tablet
+      background-image url(../images/image2x.png)
+    @media $mobile
+      height 350px
+      background-image url(../images/image.png)
+    body:not(.is-touch-device) &
+      background-repeat no-repeat
+      background-size cover
+
+  &__info
+    margin-top 20px
+    @media $mobile
+      margin-top 15px
+
+    body:not(.is-touch-device) &
+      display none
