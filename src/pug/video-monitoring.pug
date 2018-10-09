@@ -14,3 +14,17 @@ block content
     +video('video4', 'blob:http://127.0.0.1:3102/2d7e03ef-38e4-4d98-a374-decfdf930918')
 
     canvas#video-monitoring-canvas
+  
+    .video-popup
+      canvas.video-popup__video
+      .video-controls
+        .video-controls__item
+          .video-controls__caption Яркость
+          input(type="range")
+        .video-controls__item
+          .video-controls__caption Контрастность
+          input(type="range")
+        .video-controls__item
+          .video-controls__audio
+        .video-controls__item
+          canvas#vide-monitoring-canvas

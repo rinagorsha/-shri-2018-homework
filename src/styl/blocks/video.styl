@@ -27,3 +27,26 @@
     transition all .3s
     .open &
       z-index 1
+
+.video-popup
+  width 100%
+  height 100%
+  background-color #009688
+  position absolute
+  top 0
+  left 0
+  display flex
+  flex-direction column
+  &__video
+    background-color $textColor
+    flex 1 1 auto
+
+.video-controls
+  width 100%
+  display flex
+  &__item
+    width 33%
+  &__caption
+    margin-bottom 10px
+  &__volume
+    width 100%
