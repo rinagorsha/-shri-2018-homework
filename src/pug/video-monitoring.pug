@@ -1,0 +1,16 @@
+extends _layout
+
+mixin video(id, src)
+  .video-monitoring__container.js-video-container
+    .video-monitoring__element
+      video(id=id, src=src)
+      
+
+block content
+  .video-monitoring
+    +video('video1', 'blob:http://127.0.0.1:3102/82c7bcbc-8f76-4104-8a2e-b98dea54784a')
+    +video('video2', 'blob:http://127.0.0.1:3102/bf6d6d81-640f-476c-aee3-6af0cf81d7db')
+    +video('video3', 'blob:http://127.0.0.1:3102/1c94c093-81e0-4225-a2ed-31ce95925a20')
+    +video('video4', 'blob:http://127.0.0.1:3102/2d7e03ef-38e4-4d98-a374-decfdf930918')
+
+    canvas#video-monitoring-canvas

@@ -11,6 +11,7 @@ module.exports = (env, argv) => {
       './src/js/index.js',
       './src/styl/main.styl',
       './src/pug/index.pug',
+      './src/pug/video-monitoring.pug',
     ],
     module: {
       rules: [
@@ -96,8 +97,6 @@ module.exports = (env, argv) => {
     ]),
     ],
     devServer: {
-      host: '0.0.0.0',
-      useLocalIp: true,
       open: true,
     },
   })

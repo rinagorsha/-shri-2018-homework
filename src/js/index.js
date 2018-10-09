@@ -1,3 +1,5 @@
+import './video';
+
 /**
  * Проверяет, тачевое ли устройство
  */
@@ -19,6 +21,7 @@
  */
 (() => {
   const titles = document.querySelectorAll('.js-truncate');
+  if (!titles.length) return;
 
   truncate();
   window.addEventListener('resize', truncate);
@@ -47,6 +50,8 @@
   const image = document.querySelector('.js-camera-image');
   const scaleEl = document.querySelector('.js-camera-scale');
   const brightnessEl = document.querySelector('.js-camera-brightness');
+
+  if (!camera || !image || !scaleEl || !brightnessEl) return;
 
   let evCache = [];
   let gesture = null;
