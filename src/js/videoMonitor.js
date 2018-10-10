@@ -5,7 +5,6 @@ export default class VideoMonitor {
     this.url = url;
     this.container = container;
     this.video = this.container.querySelector('.js-monitoring-video');
-
     this.popup = popup;
 
     this.init();
@@ -14,7 +13,9 @@ export default class VideoMonitor {
   init(url) {
     this.initVideoStream();
     this.container.addEventListener('click', () => {
-      this.popup.open();
+      this.popup.open(
+        this.video,
+      );
     });
   }
 
