@@ -1,30 +1,29 @@
 extends _layout
 
 mixin video(id, src)
-  .video-monitoring__container.js-video-container
-    .video-monitoring__element
-      video(id=id, src=src)
-      
+  .video-monitoring__container
+    .video-monitoring__element.js-monitoring-element
+      video.video-monitoring__video.js-monitoring-video(id=id, src=src)
+
 
 block content
-  .video-monitoring
+  .video-monitoring#video-monitoring-container
     +video('video1', 'blob:http://127.0.0.1:3102/82c7bcbc-8f76-4104-8a2e-b98dea54784a')
     +video('video2', 'blob:http://127.0.0.1:3102/bf6d6d81-640f-476c-aee3-6af0cf81d7db')
     +video('video3', 'blob:http://127.0.0.1:3102/1c94c093-81e0-4225-a2ed-31ce95925a20')
     +video('video4', 'blob:http://127.0.0.1:3102/2d7e03ef-38e4-4d98-a374-decfdf930918')
 
-    canvas#video-monitoring-canvas
-  
-    .video-popup
-      canvas.video-popup__video
+    .video-popup#video-monitoring-popup
+      canvas.video-popup__video#video-monitoring-video
       .video-controls
         .video-controls__item
           .video-controls__caption Яркость
-          input(type="range")
+          input#video-input-brightness(type="range", min="0", max="300", step="1")
+          | Уровень освещенности #[span#video-monitoring-illumination]
         .video-controls__item
           .video-controls__caption Контрастность
-          input(type="range")
+          input#video-input-contrast(type="range", min="0", max="500", step="1")
         .video-controls__item
           .video-controls__audio
-        .video-controls__item
-          canvas#vide-monitoring-canvas
+            canvas#video-monitoring-audio
+        button.video-popup__back#video-monitoring-close(type="button", title="Все камеры")

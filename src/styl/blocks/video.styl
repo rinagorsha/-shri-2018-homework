@@ -1,20 +1,23 @@
 .video-monitoring
-  height 100%
   display grid
   grid-template-columns 1fr 1fr
   grid-gap 20px
   position relative
 
   &__container
+    padding-top 55%
     background-color $textColor
     display flex
     align-items center
     position relative
     cursor pointer
-    &.open
-      position static
 
   &__video
+    width 100%
+    top 0
+    left 0
+
+  &__canvas
     width 100%
 
   &__element
@@ -24,9 +27,23 @@
     position absolute
     top 0
     left 0
-    transition all .3s
-    .open &
-      z-index 1
+    z-index 1
+    transition 1s z-index 0s,all .3s
+    .video-monitoring__container:nth-child(1) &
+      background #ff0
+      top 0
+      left 0
+    .video-monitoring__container:nth-child(2) &
+      top 0
+      right 0
+    .video-monitoring__container:nth-child(3) &
+      bottom 0
+      left 0
+    .video-monitoring__container:nth-child(4) &
+      bottom 0
+      right 0
+    &.open
+      z-index 100
 
 .video-popup
   width 100%
@@ -35,18 +52,48 @@
   position absolute
   top 0
   left 0
+  z-index -1
+  opacity 0
+  visibility hidden
   display flex
   flex-direction column
+  transform scale(.485)
+  transform-origin 0 0
+  transition transform .3s, .5s all 0s
+  &.open
+    opacity 1
+    visibility visible
+    z-index 100
+    transform scale(1)
+
   &__video
     background-color $textColor
     flex 1 1 auto
 
+  &__back
+    width 30px
+    height 20px
+    background #fff url(../images/next.svg) 50% no-repeat
+    border-radius 10px
+    display inline-block
+    vertical-align middle
+    cursor pointer
+    transform rotate(180deg)
+
 .video-controls
   width 100%
   display flex
+  transition .2s all .3s
+
+  .open &
+    opacity 1
+    visibility visible
+
   &__item
     width 33%
+
   &__caption
     margin-bottom 10px
+
   &__volume
     width 100%

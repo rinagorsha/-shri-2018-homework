@@ -1,4 +1,5 @@
-import './video';
+import VideoMonitor from './videoMonitor';
+import Popup from './popup';
 
 /**
  * Проверяет, тачевое ли устройство
@@ -127,4 +128,28 @@ import './video';
   }
   camera.addEventListener('pointerup', resetGesture);
   camera.addEventListener('pointercancel', resetGesture);
+})();
+
+/**
+ * Видеонаблюдение
+ */
+(() => {
+  const urls = [
+    'http://127.0.0.1:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fcat%2Fmaster.m3u8',
+    'http://127.0.0.1:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fsosed%2Fmaster.m3u8',
+    'http://127.0.0.1:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fdog%2Fmaster.m3u8',
+    'http://127.0.0.1:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fhall%2Fmaster.m3u8',
+  ];
+  const elements = document.querySelectorAll('.js-monitoring-element');
+  const popupElement = document.getElementById('video-monitoring-popup');
+  if (!elements.length || !popupElement) return;
+
+  const popup = new Popup(popupElement);
+  for (let i = 0; i < elements.length; i++) {
+    elements[i].videoMonitor = new VideoMonitor(
+      elements[i],
+      urls[i],
+      popup,
+    );
+  }
 })();

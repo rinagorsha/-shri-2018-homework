@@ -8,9 +8,14 @@
   justify-content space-between
   align-items center
   flex 0 0 auto
+  transition opacity .3s, visibility .3s
   @media $mobile
     padding 15px 20px
     margin-top 50px
+
+  .opened-video &
+    opacity 0
+    visibility hidden
 
   &__nav
     @media $mobile
