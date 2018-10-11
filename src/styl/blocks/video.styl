@@ -2,11 +2,9 @@
   display grid
   grid-template-columns 1fr 1fr
   grid-gap 20px
-  position relative
 
   &__container
     padding-top 55%
-    background-color $textColor
     display flex
     align-items center
     position relative
@@ -21,79 +19,96 @@
     width 100%
 
   &__element
-    height 100%
-    width 100%
-    background #f00
+    background-color $yellow
     position absolute
-    top 0
-    left 0
     z-index 1
-    transition 1s z-index 0s,all .3s
+    transform scale(0.49)
+
+    transition 10s z-index 0s, all .3s
+    width calc(200% + 20px)
+    height calc(200% + 20px)
     .video-monitoring__container:nth-child(1) &
-      background #ff0
       top 0
       left 0
+      transform-origin 0 0
     .video-monitoring__container:nth-child(2) &
       top 0
       right 0
+      transform-origin 100% 0
     .video-monitoring__container:nth-child(3) &
       bottom 0
       left 0
+      transform-origin 0 100%
     .video-monitoring__container:nth-child(4) &
       bottom 0
       right 0
+      transform-origin 100% 100%
     &.open
+      transform scale(1)
       z-index 100
 
-.video-popup
-  width 100%
-  height 100%
-  background-color #009688
-  position absolute
-  top 0
-  left 0
-  z-index -1
+.video-close
+  color #fff
+  background transparent
+  border none
   opacity 0
   visibility hidden
+  position absolute
+  bottom calc(100% + 20px)
+  left 0
   display flex
-  flex-direction column
-  transform scale(.485)
-  transform-origin 0 0
-  transition transform .3s, .5s all 0s
+  align-items center
+  cursor pointer
   &.open
     opacity 1
     visibility visible
-    z-index 100
-    transform scale(1)
 
-  &__video
-    background-color $textColor
-    flex 1 1 auto
-
-  &__back
+  &:before
+    content ""
     width 30px
-    height 20px
+    height 30px
     background #fff url(../images/next.svg) 50% no-repeat
-    border-radius 10px
+    border-radius 6px
+    margin-right 10px
     display inline-block
-    vertical-align middle
-    cursor pointer
+    flex 0 0 auto
     transform rotate(180deg)
 
 .video-controls
   width 100%
-  display flex
-  transition .2s all .3s
-
-  .open &
+  background-color $yellow
+  padding 20px
+  display grid
+  grid-gap 20px
+  grid-template-columns 1fr 1fr 20%
+  opacity 0
+  visibility hidden
+  transition .2s opacity .3s
+  &.open
     opacity 1
     visibility visible
-
-  &__item
-    width 33%
+    transition 0 opacity 3s
 
   &__caption
     margin-bottom 10px
 
+  &__input
+    width 100%
+    display block
+    margin-bottom 10px
+  
+  &__video-canvas
+    display none
+
   &__volume
     width 100%
+    border 1px solid $textColor
+  
+  &__motion
+    position absolute
+    top 0
+    left 0
+    z-index 100
+
+.video-popup
+  position relative
