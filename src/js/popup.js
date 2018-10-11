@@ -1,24 +1,31 @@
 export default class Popup {
   constructor(node) {
-    this.isOpen = false;
-
     this.node = node;
+    this.mediaContainer = null;
     this.closeButton = document.getElementById('video-monitoring-close');
     this.mainContainer = document.getElementById('video-monitoring-container');
     this.illuminationOutput = document.getElementById('video-monitoring-illumination');
 
     this.illuminationValue = null;
     this.intervalID = null;
+    this.audioIntervalID = null;
     this.requestFrameID = null;
+
     this.TICK = 50;
+    this.ANALYSER_FFTSIZE = 128;
 
     this.mediaElement = null;
+    this.audioNode = null;
     this.videoCanvas = document.getElementById('video-monitoring-video');
     this.videoCanvasCtx = this.videoCanvas.getContext('2d');
+
+    this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    this.analyser = this.audioCtx.createAnalyser();
+    this.analyser.fftSize = 64;
+    this.sourceNodes = {};
+
     this.audioCanvas = document.getElementById('video-monitoring-audio');
     this.audioCanvasCtx = this.audioCanvas.getContext('2d');
-
-    this.analyser;
     this.dataArrayAlt;
     this.bufferLengthAlt;
 
@@ -26,7 +33,7 @@ export default class Popup {
   }
 
   init() {
-    this.closeButton.addEventListener('click', this.close.bind(this));
+    this.closeButton.addEventListener('click', this.close.bind(this))
 
     // Esc
     window.addEventListener('keydown', (e) => {
@@ -34,32 +41,45 @@ export default class Popup {
     });
   }
 
-  open(mediaElement) {
-    this.isOpen = true;
-    this.node.classList.add('open');
+  open({
+    mediaContainer,
+    mediaElement,
+  }) {
+
+    this.mediaContainer = mediaContainer;
     document.body.classList.add('opened-video');
     this.mediaElement = mediaElement;
 
-    this.requestFrameID = requestAnimationFrame(this.drawVideo.bind(this));
+    this.videoCanvas.width = mediaElement.offsetWidth;
+    this.videoCanvas.height = mediaElement.offsetHeight;
 
-    this.intervalID = setInterval(() => {
-      this.calcIllumination();
-    }, this.TICK);
+    this.node.classList.add('open');
+    this.mediaContainer.classList.add('open');
+    this.closeButton.classList.add('open');
+
+    this.requestFrameID = requestAnimationFrame(this.drawVideo.bind(this));
+    
+    this.intervalID = setInterval(() => this.calcIllumination(), this.TICK);
+    this.videoIntervalID = setInterval(() => this.drawVideo(), this.TICK);
+    this.initAnalyser();
   }
 
   close() {
     clearInterval(this.intervalID);
+    clearInterval(this.videoIntervalID);
+    clearInterval(this.audioIntervalID);
     cancelAnimationFrame(this.requestFrameID);
-    
-    this.isOpen = false;
+    this.audioNode.disconnect(this.analyser);
+
     this.node.classList.remove('open');
+    this.closeButton.classList.remove('open');
+    if(this.mediaContainer) this.mediaContainer.classList.remove('open');
     document.body.classList.remove('opened-video');
   }
 
   drawVideo() {
     const {width, height} = this.videoCanvas;
     this.videoCanvasCtx.drawImage(this.mediaElement, 0, 0, width, height);
-    this.requestFrameID = requestAnimationFrame(this.drawVideo.bind(this));
   }
 
   calcIllumination() {
@@ -77,25 +97,23 @@ export default class Popup {
   }
 
   initAnalyser() {
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    this.analyser = audioCtx.createAnalyser();
+    const id = this.mediaElement.getAttribute('id');
+    this.audioNode = this.sourceNodes[id];
+    if (!this.audioNode) {
+      this.audioNode = this.audioCtx.createMediaElementSource(this.mediaElement);
+      this.sourceNodes[id] = this.audioNode;
+    }
+    this.audioNode.connect(this.analyser).connect(this.audioCtx.destination)
 
-    this.analyser.fftSize = 64;
-
-    const sourceNode = audioCtx.createMediaElementSource(this.video);
-    sourceNode.connect(this.analyser);
-    this.analyser.connect(audioCtx.destination);
-    
     this.bufferLengthAlt = this.analyser.frequencyBinCount;
     this.dataArrayAlt = new Uint8Array(this.bufferLengthAlt);
+
+    this.audioIntervalID = setInterval(this.audioVisualizing.bind(this), this.TICK);
   }
 
   audioVisualizing() {
-    requestAnimationFrame(this.audioVisualizing.bind(this));
-
     const width = this.audioCanvas.width;
     const height = this.audioCanvas.height;
-
 
     this.analyser.getByteFrequencyData(this.dataArrayAlt);
 
@@ -114,5 +132,5 @@ export default class Popup {
 
       x += barWidth + 1;
     }
-  };
+  }
 }

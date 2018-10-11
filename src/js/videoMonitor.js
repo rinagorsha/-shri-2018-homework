@@ -2,21 +2,19 @@ import Hls from 'hls.js';
 
 export default class VideoMonitor {
   constructor(container, url, popup) {
+    this.isOpen = false;
+
     this.url = url;
     this.container = container;
     this.video = this.container.querySelector('.js-monitoring-video');
     this.popup = popup;
 
     this.init();
+    this.initVideoStream();
   }
 
   init(url) {
-    this.initVideoStream();
-    this.container.addEventListener('click', () => {
-      this.popup.open(
-        this.video,
-      );
-    });
+    this.container.addEventListener('click', () => this.openPopup());
   }
 
   initVideoStream() {
@@ -28,10 +26,19 @@ export default class VideoMonitor {
         this.video.play();
       });
     } else if (this.video.canPlayType('application/vnd.apple.mpegurl')) {
-      this.video.src = 'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8';
+      this.video.src = url;
       this.video.addEventListener('loadedmetadata', () => {
         this.video.play();
       });
     }
+  }
+
+  openPopup() {
+    if (this.isOpen) return;
+
+    this.popup.open({
+      mediaContainer: this.container,
+      mediaElement: this.video,
+    });
   }
 }
