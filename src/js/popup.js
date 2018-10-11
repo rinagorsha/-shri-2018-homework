@@ -4,9 +4,16 @@ export default class Popup {
     this.mediaContainer = null;
     this.closeButton = document.getElementById('video-monitoring-close');
     this.mainContainer = document.getElementById('video-monitoring-container');
+    this.inputBrightness = document.getElementById('video-input-brightness');
+    this.inputContrast = document.getElementById('video-input-contrast');
     this.illuminationOutput = document.getElementById('video-monitoring-illumination');
 
+    this.filterHandler = null;
+    this.closeHandler = null;
+    this.brightnessValue = 100;
+    this.contrastValue = 100;
     this.illuminationValue = null;
+
     this.intervalID = null;
     this.audioIntervalID = null;
     this.requestFrameID = null;
@@ -39,16 +46,34 @@ export default class Popup {
     window.addEventListener('keydown', (e) => {
       if (e.keyCode === 27) this.close();
     });
+
+    this.inputBrightness.addEventListener('change', () => {
+      this.brightnessValue = this.inputBrightness.value;
+      this.filterHandler(this.brightnessValue, this.contrastValue);
+    });
+
+    this.inputContrast.addEventListener('change', () => {
+      this.contrastValue = this.inputContrast.value;
+      this.filterHandler(this.brightnessValue, this.contrastValue);
+    });
   }
 
   open({
     mediaContainer,
     mediaElement,
+    brightness,
+    contrast,
+    closeHandler,
+    filterHandler,
   }) {
 
     this.mediaContainer = mediaContainer;
     document.body.classList.add('opened-video');
     this.mediaElement = mediaElement;
+    this.brightnessValue = brightness;
+    this.contrastValue = contrast;
+    this.closeHandler = closeHandler;
+    this.filterHandler = filterHandler;
 
     this.videoCanvas.width = mediaElement.offsetWidth;
     this.videoCanvas.height = mediaElement.offsetHeight;
@@ -56,6 +81,8 @@ export default class Popup {
     this.node.classList.add('open');
     this.mediaContainer.classList.add('open');
     this.closeButton.classList.add('open');
+    this.inputBrightness.value = brightness;
+    this.inputContrast.value = contrast;
 
     this.requestFrameID = requestAnimationFrame(this.drawVideo.bind(this));
     
@@ -75,6 +102,9 @@ export default class Popup {
     this.closeButton.classList.remove('open');
     if(this.mediaContainer) this.mediaContainer.classList.remove('open');
     document.body.classList.remove('opened-video');
+    if (this.closeHandler) {
+      this.closeHandler(this.brightnessValue, this.contrastValue);
+    }
   }
 
   drawVideo() {

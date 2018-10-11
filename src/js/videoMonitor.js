@@ -9,6 +9,9 @@ export default class VideoMonitor {
     this.video = this.container.querySelector('.js-monitoring-video');
     this.popup = popup;
 
+    this.brightnessValue = 100;
+    this.contrastValue = 100;
+
     this.init();
     this.initVideoStream();
   }
@@ -35,10 +38,27 @@ export default class VideoMonitor {
 
   openPopup() {
     if (this.isOpen) return;
+    this.isOpen = true;
+    this.video.muted = false;
 
     this.popup.open({
       mediaContainer: this.container,
       mediaElement: this.video,
+      brightness: this.brightnessValue,
+      contrast: this.contrastValue,
+      closeHandler: this.closePopup.bind(this),
+      filterHandler: this.applyFilter.bind(this),
     });
+  }
+
+  closePopup(brightness, contrast) {
+    this.isOpen = false;
+    this.video.muted = true;
+  }
+
+  applyFilter(brightness, contrast) {
+    this.brightnessValue = brightness;
+    this.contrastValue = contrast;
+    this.video.style.filter = `brightness(${this.brightnessValue}%) contrast(${this.contrastValue}%)`
   }
 }
