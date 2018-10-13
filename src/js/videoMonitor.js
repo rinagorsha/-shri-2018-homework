@@ -17,7 +17,7 @@ export default class VideoMonitor {
   }
 
   init(url) {
-    this.container.addEventListener('click', () => this.openPopup());
+    this.container.addEventListener('click', () => this.open());
   }
 
   initVideoStream() {
@@ -36,29 +36,16 @@ export default class VideoMonitor {
     }
   }
 
-  openPopup() {
+  open() {
     if (this.isOpen) return;
     this.isOpen = true;
     this.video.muted = false;
 
-    this.popup.open({
-      mediaContainer: this.container,
-      mediaElement: this.video,
-      brightness: this.brightnessValue,
-      contrast: this.contrastValue,
-      closeHandler: this.closePopup.bind(this),
-      filterHandler: this.applyFilter.bind(this),
-    });
+    this.popup.open(this);
   }
 
-  closePopup(brightness, contrast) {
+  close(brightness, contrast) {
     this.isOpen = false;
     this.video.muted = true;
-  }
-
-  applyFilter(brightness, contrast) {
-    this.brightnessValue = brightness;
-    this.contrastValue = contrast;
-    this.video.style.filter = `brightness(${this.brightnessValue}%) contrast(${this.contrastValue}%)`
   }
 }
