@@ -1,24 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {pad, dateDiff, filterEvents, checkFilter} = require('./utils');
-const eventsJson = require('../events.json');
+const { eventsView } = require('./views');
+const { dateDiff } = require('./utils');
 
 const app = express();
 const startWorkDate = new Date();
-
-
-function eventsView(type, res) {
-  // Если невалидный запрос
-  if (type && !checkFilter(type)) {
-    res.send('incorrect type', 400);
-    return;
-  }
-
-  const result = filterEvents(type, eventsJson);
-
-  res.setHeader('Content-Type', 'application/json');
-  res.send(result);
-}
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -37,13 +23,13 @@ app.get('/status', function (req, res) {
 });
 
 app.get('/api/events', function (req, res) {
-  const {type} = req.query;
-  eventsView(type, res);
+  const {type, page, limit} = req.query;
+  eventsView(res, type, limit, page);
 });
 
 app.post('/api/events', function (req, res) {
-  const {type} = req.body;
-  eventsView(type, res);
+  const {type, page, limit} = req.body;
+  eventsView(res, type, limit, page);
 });
 
 app.get('*', function(req, res){
