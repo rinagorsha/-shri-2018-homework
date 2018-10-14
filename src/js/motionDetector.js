@@ -20,20 +20,24 @@ export default class MotionDetector {
   init(width, height) {
     this.blendedData = this.contextSource.createImageData(width, height);
   }
-  
+
   update() {
     this.blend();
     this.motionDetection();
   }
-  
+
   getWidth() {
     return this.canvasSource.width;
   }
-  
+
   getHeight() {
     return this.canvasSource.height;
   }
-  
+
+  /**
+   * Считает разницу между предыдущим и текущим кадрами
+   * Результат сохраняется в this.blendedData
+   */
   blend() {
     const width = this.getWidth();
     const height = this.getHeight();
@@ -45,6 +49,12 @@ export default class MotionDetector {
     this.lastImageData = sourceData;
   }
 
+  /**
+   * Считает разницу между двумя кадрами
+   * Сохраняет разницу в target
+   * Результат представляет собой rgba массив с черно-белым изображением
+   * Белым помечается разница между кадрами (движение)
+   */
   differenceAccuracy(target, data1, data2) {
     if (data1.length !== data2.length) return null;
     for(let i = 0; i < data1.length; i += 4) {
@@ -59,10 +69,19 @@ export default class MotionDetector {
     }
   }
 
+  /**
+   * Решает, находится ли разница между предыдущим и текущим пикселями
+   * в допустимом пределе
+   */
   threshold(value) {
     return (value > this.THRESHOLD_DIFF) ? 255 : 0;
   }
 
+  /**
+   * Определяет границы движения в кадре
+   * Идет чанками CHUNK_SIZE по разнице между кадрами (this.blendedData)
+   * Движение есть, если в чанке процент содержания белого больше, чем WHITE_PERCENT_THRESHOLD
+   */
   motionDetection() {
     const width = this.getWidth();
     const height = this.getHeight();
@@ -82,11 +101,22 @@ export default class MotionDetector {
     this.drawRect(min[0], min[1], max[0] - min[0] + this.CHUNK_SIZE, max[1] - min[1]+ this.CHUNK_SIZE)
   }
 
+  /**
+   * Считает процент содержания белого в чанке
+   */
   calcWhitePercent(row, col) {
     const sum = this.calcChunk(row, col);
     return sum / 255 / (this.CHUNK_SIZE**2) * 100;
   }
 
+  /**
+   * Считает сумму цвета всех пикселей в чанке
+   * index -- значение RED для пикселя
+   * Все пиксели либо черные, либо белые, поэтому достаточно считать только RED составляющую пикселя
+   * 
+   * Позволяет не рендерить дополнительную blendedCanvas:
+   * Заменяет this.ctx.getImageData(col, row, this.CHUNK_SIZE, this.CHUNK_SIZE)
+   */
   calcChunk(startRow, startCol) {
     const width = this.getWidth();
     const height = this.getHeight();
@@ -102,6 +132,9 @@ export default class MotionDetector {
     return sum;
   }
 
+  /**
+   * Рисует границы дыидения на canvasMotion
+   */
   drawRect(startX, startY, endX, endY) {
     const width = this.getWidth();
     const height = this.getHeight();

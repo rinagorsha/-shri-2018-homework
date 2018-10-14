@@ -112,11 +112,19 @@ export default class Popup {
     this.mediaElement.contrastValue = this.contrastValue;
   }
 
+  /**
+   * Рендерит видео-поток в canvas
+   * Используется для вычисления уровня освещенности и определения движения
+   */
   drawVideo() {
     const {width, height} = this.videoCanvas;
     this.videoCanvasCtx.drawImage(this.mediaElement.video, 0, 0, width, height);
   }
 
+  /**
+   * Рассчитывает уровень освещенности
+   * по формуле https://www.w3.org/TR/AERT/#color-contrast
+   */
   calcIllumination() {
     const {width, height} = this.videoCanvas;
     const imageData = this.videoCanvasCtx.getImageData(0, 0, width, height);
@@ -146,6 +154,9 @@ export default class Popup {
     this.audioIntervalID = setInterval(this.audioVisualizing.bind(this), this.TICK);
   }
 
+  /**
+   * Рисует громкость звука в виде столбчатой диаграммы
+   */
   audioVisualizing() {
     const width = this.audioCanvas.width;
     const height = this.audioCanvas.height;
