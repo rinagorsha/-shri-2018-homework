@@ -170,7 +170,7 @@ export default class Popup {
     let barHeight;
     let x = 0;
 
-    for(var i = 0; i < this.bufferLengthAlt; i++) {
+    for(let i = 0; i < this.bufferLengthAlt; i++) {
       barHeight = this.dataArrayAlt[i];
 
       this.audioCanvasCtx.fillStyle = 'rgb(' + (barHeight + 100) + ', 50, 50)';

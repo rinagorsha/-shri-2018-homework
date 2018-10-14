@@ -22,7 +22,7 @@ export default class VideoMonitor {
 
   initVideoStream() {
     if (Hls.isSupported()) {
-      var hls = new Hls();
+      const hls = new Hls();
       hls.loadSource(this.url);
       hls.attachMedia(this.video);
       hls.on(Hls.Events.MANIFEST_PARSED, () => {

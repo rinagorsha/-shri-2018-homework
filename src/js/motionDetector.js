@@ -42,7 +42,7 @@ export default class MotionDetector {
     const width = this.getWidth();
     const height = this.getHeight();
     
-    var sourceData = this.contextSource.getImageData(0, 0, width, height);
+    const sourceData = this.contextSource.getImageData(0, 0, width, height);
     if (!this.lastImageData) this.lastImageData = sourceData;
 
     this.differenceAccuracy(this.blendedData.data, sourceData.data, this.lastImageData.data);
@@ -58,9 +58,9 @@ export default class MotionDetector {
   differenceAccuracy(target, data1, data2) {
     if (data1.length !== data2.length) return null;
     for(let i = 0; i < data1.length; i += 4) {
-      var average1 = (data1[i] + data1[i+1] + data1[i+2]) / 3;
-      var average2 = (data2[i] + data2[i+1] + data2[i+2]) / 3;
-      var diff = this.threshold(Math.abs(average1 - average2));
+      const average1 = (data1[i] + data1[i+1] + data1[i+2]) / 3;
+      const average2 = (data2[i] + data2[i+1] + data2[i+2]) / 3;
+      const diff = this.threshold(Math.abs(average1 - average2));
 
       target[i] = diff;
       target[i+1] = diff;
