@@ -4,8 +4,9 @@
   "description": "Домашнее задание 1 «Адаптивная вёрстка»",
   "main": "webpack.config.js",
   "scripts": {
-    "serve": "webpack-dev-server --mode development",
-    "compile": "webpack --mode production"
+    "start": "webpack-dev-server --mode development",
+    "compile": "webpack --mode production",
+    "server": "node ./server/index"
   },
   "author": "",
   "license": "ISC",
@@ -30,6 +31,7 @@
     "webpack-dev-server": "^3.1.9"
   },
   "dependencies": {
+    "express": "^4.16.4",
     "hls.js": "^0.11.0"
   }
 }
