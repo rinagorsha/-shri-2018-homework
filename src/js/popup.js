@@ -15,7 +15,6 @@ export default class Popup {
     this.intervalID = null;
     this.audioIntervalID = null;
     this.motionIntervalID = null;
-    this.requestFrameID = null;
 
     this.TICK = 50;
     this.ANALYSER_FFTSIZE = 64;
@@ -24,7 +23,6 @@ export default class Popup {
     this.videoCanvas = document.getElementById('video-monitoring-video');
     this.videoCanvasCtx = this.videoCanvas.getContext('2d');
 
-    this.canvasBlended = document.getElementById('video-monitoring-blended');
     this.canvasMotion = document.getElementById('video-monitoring-motion');
 
     this.audioCanvas = document.getElementById('video-monitoring-audio');
@@ -35,7 +33,7 @@ export default class Popup {
     this.dataArrayAlt;
     this.bufferLengthAlt;
 
-    this.motionDetector = new MotionDetector(this.videoCanvas, this.canvasBlended, this.canvasMotion);
+    this.motionDetector = new MotionDetector(this.videoCanvas, this.canvasMotion);
 
     this.init();
   }
@@ -45,7 +43,7 @@ export default class Popup {
     this.analyser = this.audioCtx.createAnalyser();
     this.analyser.fftSize = this.ANALYSER_FFTSIZE;
 
-    // Esc
+    // Закрывает popup на клавишу Esc
     window.addEventListener('keydown', (e) => {
       if (e.keyCode === 27) this.close();
     });
@@ -75,8 +73,6 @@ export default class Popup {
 
     this.videoCanvas.width = mediaElement.video.offsetWidth;
     this.videoCanvas.height = mediaElement.video.offsetHeight;
-    this.canvasBlended.width = mediaElement.video.offsetWidth;
-    this.canvasBlended.height = mediaElement.video.offsetHeight;
     this.canvasMotion.width = mediaElement.video.offsetWidth;
     this.canvasMotion.height = mediaElement.video.offsetHeight;
     
@@ -87,7 +83,8 @@ export default class Popup {
     this.inputBrightness.value = this.mediaElement.brightnessValue;
     this.inputContrast.value = this.mediaElement.contrastValue;
 
-    this.requestFrameID = requestAnimationFrame(this.drawVideo.bind(this));
+    this.motionDetector.init(mediaElement.video.offsetWidth, mediaElement.video.offsetHeight)
+
     this.intervalID = setInterval(() => this.calcIllumination(), this.TICK);
     this.videoIntervalID = setInterval(() => this.drawVideo(), this.TICK);
     this.motionIntervalID = setInterval(() => this.motionDetector.update(), this.TICK);
@@ -99,7 +96,6 @@ export default class Popup {
     clearInterval(this.videoIntervalID);
     clearInterval(this.motionIntervalID);
     clearInterval(this.audioIntervalID);
-    cancelAnimationFrame(this.requestFrameID);
     this.audioNode.disconnect(this.analyser);
 
     this.node.classList.remove('open');

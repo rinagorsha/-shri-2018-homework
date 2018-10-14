@@ -1,19 +1,24 @@
 export default class MotionDetector {
-  constructor(canvasSource, canvasBlended, canvasMotion, chunkSize = 20, thresholdDiff = 21, whitePercentThreshold = 30) {
-    console.log(canvasSource, canvasBlended, canvasMotion)
+  constructor(canvasSource, canvasMotion, chunkSize = 20, thresholdDiff = 21, whitePercentThreshold = 30) {
     this.canvasSource = canvasSource;
     this.contextSource = canvasSource.getContext('2d');
-    
-    this.canvasBlended = canvasBlended;
-    this.contextBlended = canvasBlended.getContext('2d');
     
     this.canvasMotion = canvasMotion;
     this.contextMotion = canvasMotion.getContext('2d');
     
+    this.blendedData = null;
     this.lastImageData = null;
+
     this.CHUNK_SIZE = chunkSize;
     this.THRESHOLD_DIFF = thresholdDiff;
     this.WHITE_PERCENT_THRESHOLD = whitePercentThreshold;
+
+    this.MOTION_RECT_COLOR = 'red';
+    this.MOTION_RECT_STROKE = '3';
+  }
+
+  init(width, height) {
+    this.blendedData = this.contextSource.createImageData(width, height);
   }
   
   update() {
@@ -33,15 +38,13 @@ export default class MotionDetector {
     const width = this.getWidth();
     const height = this.getHeight();
     
-    var sourceData = this.contextSource.getImageData(0,0,width,height);
+    var sourceData = this.contextSource.getImageData(0, 0, width, height);
     if (!this.lastImageData) this.lastImageData = sourceData;
-    var blendedData = this.contextSource.createImageData(width, height);
 
-    this.differenceAccuracy(blendedData.data, sourceData.data, this.lastImageData.data);
-    this.contextBlended.putImageData(blendedData, 0, 0);
+    this.differenceAccuracy(this.blendedData.data, sourceData.data, this.lastImageData.data);
     this.lastImageData = sourceData;
   }
-  
+
   differenceAccuracy(target, data1, data2) {
     if (data1.length !== data2.length) return null;
     for(let i = 0; i < data1.length; i += 4) {
@@ -55,7 +58,7 @@ export default class MotionDetector {
       target[i+3] = 255;
     }
   }
-  
+
   threshold(value) {
     return (value > this.THRESHOLD_DIFF) ? 255 : 0;
   }
@@ -68,8 +71,7 @@ export default class MotionDetector {
     let max = [0, 0];
     for (let row = 0; row < height; row += this.CHUNK_SIZE) {
       for (let col = 0; col < width; col += this.CHUNK_SIZE) {
-        const data = this.contextBlended.getImageData(col, row, this.CHUNK_SIZE, this.CHUNK_SIZE);
-        const average = this.calcAverage(data.data);
+        const average = this.calcWhitePercent(row, col);
         if (average < this.WHITE_PERCENT_THRESHOLD) continue;
         if (col < min[0]) min[0] = col;
         if (row < min[1]) min[1] = row;
@@ -80,12 +82,24 @@ export default class MotionDetector {
     this.drawRect(min[0], min[1], max[0] - min[0] + this.CHUNK_SIZE, max[1] - min[1]+ this.CHUNK_SIZE)
   }
 
-  calcAverage(data) {
+  calcWhitePercent(row, col) {
+    const sum = this.calcChunk(row, col);
+    return sum / 255 / (this.CHUNK_SIZE**2) * 100;
+  }
+
+  calcChunk(startRow, startCol) {
+    const width = this.getWidth();
+    const height = this.getHeight();
+
     let sum = 0;
-    for (let i = 0; i < data.length; i += 4) {
-      sum += data[i];
+    for (let row = startRow; row < height && row < startRow + this.CHUNK_SIZE; row++) {
+      for (let col = startCol; col < width && col < startCol + this.CHUNK_SIZE; col++) {
+        const index = row * width*4 + col*4;
+        sum += this.blendedData.data[index];
+      }
     }
-    return sum / 255 / (data.length / 4) * 100;
+
+    return sum;
   }
 
   drawRect(startX, startY, endX, endY) {
@@ -93,8 +107,8 @@ export default class MotionDetector {
     const height = this.getHeight();
 
     this.contextMotion.clearRect(0, 0, width, height);
-    this.contextMotion.strokeStyle = "red";
-    this.contextMotion.lineWidth="3";
+    this.contextMotion.strokeStyle = this.MOTION_RECT_COLOR;
+    this.contextMotion.lineWidth = this.MOTION_RECT_STROKE;
     this.contextMotion.strokeRect(startX, startY, endX, endY);
   }
 }
