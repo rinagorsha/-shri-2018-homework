@@ -59,6 +59,9 @@
   display flex
   align-items center
   cursor pointer
+  @media $mobile
+     bottom calc(100% + 10px)
+
   &.open
     opacity 1
     visibility visible
@@ -84,6 +87,11 @@
   opacity 0
   visibility hidden
   transition .2s opacity .3s
+  @media $tablet
+    grid-template-columns 1fr 1fr
+  @media $mobile
+    grid-template-columns 1fr
+
   &.open
     opacity 1
     visibility visible
@@ -103,8 +111,11 @@
   &__volume
     width 100%
     border 1px solid $textColor
+    @media $tablet
+      max-width 200px
   
   &__motion
+    max-width 100%
     position absolute
     top 0
     left 0
