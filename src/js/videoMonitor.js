@@ -40,6 +40,7 @@ export default class VideoMonitor {
     if (this.isOpen) return;
     this.isOpen = true;
     this.video.muted = false;
+    this.video.play(); // на случай, если автоплей не сработал
 
     this.popup.open(this);
   }
