@@ -1,26 +1,31 @@
+type gesture = {
+  startX: number,
+  startY: number,
+}
+
 export default () => {
-  const camera = document.querySelector('.js-camera');
-  const image = document.querySelector('.js-camera-image');
-  const scaleEl = document.querySelector('.js-camera-scale');
-  const brightnessEl = document.querySelector('.js-camera-brightness');
+  const camera: HTMLElement | null = document.querySelector('.js-camera');
+  const image: HTMLElement | null = document.querySelector('.js-camera-image');
+  const scaleEl: HTMLElement | null = document.querySelector('.js-camera-scale');
+  const brightnessEl: HTMLElement | null = document.querySelector('.js-camera-brightness');
 
   if (!camera || !image || !scaleEl || !brightnessEl) return;
 
-  let evCache = [];
-  let gesture = null;
-  let prevScaleDiff = -1;
-  let currentScale = 1;
+  let evCache: PointerEvent[] = [];
+  let gesture: gesture | null = null;
+  let prevScaleDiff: number = -1;
+  let currentScale: number = 1;
 
-  const SCALE_MULTIPLIER = 8000;
-  const PINCH_VS_SCALE = 3;
-  const MAX_SCALE = 2;
+  const SCALE_MULTIPLIER: number = 8000;
+  const PINCH_VS_SCALE: number = 3;
+  const MAX_SCALE: number = 2;
 
-  camera.addEventListener('pointerdown', (event) => {
+  camera.addEventListener('pointerdown', (event: PointerEvent) => {
     camera.setPointerCapture(event.pointerId);
     evCache.push(event);
 
-    const currentX = parseInt(getComputedStyle(image).backgroundPositionX, 10) || 0;
-    const currentY = parseInt(getComputedStyle(image).backgroundPositionY, 10) || 0;
+    const currentX: number = parseInt(getComputedStyle(image).backgroundPositionX || '0', 10);
+    const currentY: number = parseInt(getComputedStyle(image).backgroundPositionY || '0', 10);
 
     gesture = {
       startX: event.x - currentX,
@@ -28,29 +33,29 @@ export default () => {
     };
   });
 
-  camera.addEventListener('pointermove', (event) => {
+  camera.addEventListener('pointermove', (event: PointerEvent) => {
     if (!gesture) {
       return;
     }
 
     // drag
     if (evCache.length === 1) {
-      const dx = gesture.startX - event.x;
-      const dy = gesture.startY - event.y;
+      const dx: number = gesture.startX - event.x;
+      const dy: number = gesture.startY - event.y;
 
       image.style.backgroundPosition = `${-dx}px ${-dy}px`;
     }
 
     if (evCache.length === 2) {
       // brightness
-      const dx = Math.abs(evCache[0].x - evCache[1].x);
-      const dy = Math.abs(evCache[0].y - evCache[1].y);
-      const diffAtan = Math.atan2(dy, dx);
+      const dx: number = Math.abs(evCache[0].x - evCache[1].x);
+      const dy: number = Math.abs(evCache[0].y - evCache[1].y);
+      const diffAtan: number = Math.atan2(dy, dx);
       image.style.filter = `brightness(${diffAtan})`;
       brightnessEl.innerText = `${Math.round(diffAtan * 100)}%`;
 
       // scale
-      const currentScaleDiff = Math.hypot(dy, dx);
+      const currentScaleDiff: number = Math.hypot(dy, dx);
       if (Math.abs(currentScaleDiff - prevScaleDiff) > PINCH_VS_SCALE) {
         if (currentScaleDiff > prevScaleDiff) currentScale += currentScaleDiff / SCALE_MULTIPLIER;
         if (currentScaleDiff < prevScaleDiff) currentScale -= currentScaleDiff / SCALE_MULTIPLIER;
@@ -70,7 +75,7 @@ export default () => {
     }
   });
 
-  const resetGesture = () => {
+  const resetGesture = (): void => {
     if (!gesture) {
       return;
     }
