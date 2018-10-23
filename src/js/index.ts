@@ -6,7 +6,7 @@ import initCameraController from './cameraController';
  * Проверяет, тачевое ли устройство
  */
 (() => {
-  let isTouchDevice = false;
+  let isTouchDevice: boolean = false;
 
   if (('ontouchstart' in window) || navigator.msMaxTouchPoints) {
     isTouchDevice = true;
@@ -21,7 +21,7 @@ import initCameraController from './cameraController';
  * Обрезает заголовки
  */
 (() => {
-  const titles = document.querySelectorAll('.js-truncate');
+  const titles: NodeListOf<HTMLElement> = document.querySelectorAll('.js-truncate');
   if (!titles.length) return;
 
   truncate();
@@ -29,15 +29,17 @@ import initCameraController from './cameraController';
 
   function truncate() {
     for (let i = 0; i < titles.length; i++) {
-      const item = titles[i];
-      const maxHeight = parseInt(getComputedStyle(item).lineHeight, 10) * 2.5;
-      let text = item.getAttribute('title');
+      const item: HTMLElement = titles[i];
+      const lineHeight: string = getComputedStyle(item).lineHeight || '1';
+
+      const maxHeight: number = parseInt(lineHeight, 10) * 2.5;
+      const text: string = item.getAttribute('title') || '';
+      const textArr: string[] = text.split(' ');
       item.textContent = text;
-      text = text.split(' ');
 
       while (item.offsetHeight > maxHeight) {
-        text.pop();
-        item.textContent = text.join(' ') + '...';
+        textArr.pop();
+        item.textContent = textArr.join(' ') + '...';
       }
     }
   }
