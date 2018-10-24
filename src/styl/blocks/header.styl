@@ -10,10 +10,15 @@
   position fixed
   top 0
   left 0
+  transition opacity .3s, visibility .3s
   @media $mobile
     border-bottom none
     padding 20px
     justify-content space-between
+  
+  .opened-video &
+    opacity 0
+    visibility hidden
 
   &__logo
     margin-right 20px

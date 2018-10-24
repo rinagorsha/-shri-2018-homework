@@ -1,10 +1,10 @@
-include panel
+include _panel
 
 doctype html
 html(lang="ru")
   head
     meta(charset="UTF-8")
-    title Домашнее задание 1 «Адаптивная вёрстка»
+    title ШРИ 2018 II Домашнее задание
     meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
     link(rel="stylesheet", href="main.css")
     meta(name="robots" content="noindex")
@@ -13,13 +13,14 @@ html(lang="ru")
   body
     header.header
       .header__logo
-        a.logo(href="#") Яндекс Дом
+        a.logo(href="index.html") Яндекс Дом
       .header__nav
         nav.nav-header
           a.nav-header__item.nav-header__item_active(href="#") События
           a.nav-header__item(href="#") Сводка
           a.nav-header__item(href="#") Устройства
           a.nav-header__item(href="#") Сценарии
+          a.nav-header__item(href="video-monitoring.html") Видеонаблюдение
       button.header__menu.js-menu-button(type="button")
 
     main.main
