@@ -2,8 +2,7 @@ const TYPES = ['info', 'critical'];
 
 function pad(num, length = 2, symb = '0') {
   const n = num.toString();
-  const result = n.length >= length ? n : pad(symb + n, length, symb);
-  return result;
+  return n.length >= length ? n : pad(symb + n, length, symb);
 }
 
 function dateDiff(date1, date2) {
@@ -13,8 +12,7 @@ function dateDiff(date1, date2) {
   let minutes = Math.floor(diff / 60 / 1000) % 60;
   let seconds = Math.floor(diff / 1000) % 60;
 
-  const result = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
-  return result;
+  return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
 
 /**
@@ -75,12 +73,14 @@ function pagitateEvents(data, limit, page) {
 
 function checkFilter(filters) {
   const filtersArr = filters.split(':');
-  return !filtersArr.some(item => TYPES.includes(item) === false );
+  return !filtersArr.some(item => !TYPES.includes(item));
 }
 
-module.exports.pad = pad;
-module.exports.dateDiff = dateDiff;
-module.exports.filterEvents = filterEvents;
-module.exports.pagitateEvents = pagitateEvents;
-module.exports.preparePaginationParams = preparePaginationParams;
-module.exports.checkFilter = checkFilter;
+module.exports = {
+  pad,
+  dateDiff,
+  filterEvents,
+  pagitateEvents,
+  preparePaginationParams,
+  checkFilter,
+};

@@ -9,13 +9,13 @@ const {
 function eventsView(res, type, queryLimit, queryPage) {
   // Если невалидный запрос
   if (type && !checkFilter(type)) {
-    res.send('incorrect type', 400);
+    res.status(400).send('incorrect type');
     return;
   }
 
   const {errors, limit, page} = preparePaginationParams(queryLimit, queryPage);
   if (errors) {
-    res.send('incorrect pagination', 400);
+    res.status(400).send('incorrect pagination');
     return;
   }
 
@@ -23,7 +23,7 @@ function eventsView(res, type, queryLimit, queryPage) {
   result = pagitateEvents(result, limit, page);
 
   if (!result.events.length) {
-    res.send(' <h1>Page not found</h1>', 404);
+    res.status(404).send('<h1>Page not found</h1>');
     return;
   }
 
