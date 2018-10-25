@@ -1,28 +1,28 @@
 mixin panel(item)
   - var iconName = `${item.icon}${item.type === 'critical' ? '-white' : ''}`
 
-  .panel(class=[
+  article.panel(class=[
     `panel_${item.size}`,
     `panel_${item.type}`,
     attributes.class,
     {'panel_has-content': item.description || item.data}
   ])
-    .panel__header
+    header.panel__header
       .panel__title
         .panel__icon
           .icon(class={
             [`icon_${item.icon}`]: true,
             [`icon_${item.icon}_active`]: item.type === 'critical',
           })
-        .panel__name.js-truncate(data-original=item.title)= item.title
+        h2.panel__name.js-truncate(title=item.title)= item.title
       .panel-info(class=`panel-info_${item.size}`)
         .panel-info__item= item.source
-        .panel-info__item= item.time
+        time.panel-info__item(datetime="2018-11-24")= item.time
 
     if item.description || item.data
       .panel__content
         .panel__line
-          .panel__text= item.description
+          p.panel__text= item.description
         
         if item.data && item.data.image
           .panel__line
@@ -40,9 +40,9 @@ mixin panel(item)
               .player__header
                 .player__picture(style={'background-image': `url(${item.data.albumcover})`})
                 .player__info
-                  .player__name #{item.data.artist} - #{item.data.track.name}
+                  label.player__name(for="track") #{item.data.artist} - #{item.data.track.name}
                   .player__duration
-                    input.player__track(type="range")
+                    input#track.player__track(type="range", name="track")
                     .player__value #{item.data.track.length}
               .player__controls
                 button.player__button.player__button_prev(type="button")
@@ -52,7 +52,7 @@ mixin panel(item)
 
         if item.data && item.data.type == 'graph'
           .panel__line
-            img.panel__image(src="images/graph.png" alt=item.title)
+            img.panel__image(src="images/graph.jpg" alt=item.title)
 
         if item.data && item.data.buttons
           .panel__line

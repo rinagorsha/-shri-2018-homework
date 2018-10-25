@@ -5,21 +5,21 @@
   &__picture
     width 53px
     height @width
+    background-position 50%
     background-size cover
     background-repeat no-repeat
-    background-position 50%
     border-radius 10px
     margin-right 15px
     flex 0 0 auto
-  
+
   &__info
     flex 1 1 auto
 
   &__duration
+    margin-top 12px
     display flex
     align-items center
-    margin-top 12px
-  
+
   &__controls
     margin-top 20px
     display flex
@@ -28,20 +28,22 @@
   &__button
     width 53px
     height @width
-    border-radius 50%
-    background $gray2 url(../images/arrows-prev.svg) 50% no-repeat
+    background $gray2 url('../images/arrows-prev.svg') 50% no-repeat
     background-size contain
-    display inline-block
+    border-radius 50%
     vertical-align middle
+    display inline-block
     flex 0 0 auto
     cursor pointer
+
     &_next
-      transform rotate(180deg)
       margin-left 30px
       margin-right 10px
+      transform rotate(180deg)
+
       @media $mobile
         margin-left 20px
-  
+
   &__value
     min-width 40px
     color #aeaeae
@@ -51,14 +53,16 @@
 
   &__track
     flex 0 1 auto
+
     rangeHandle()
       width 10px
       height 20px
-      margin -10px 0 0
       background #d8d8d8
-      border-radius 4px
-      cursor pointer
       border 0
+      border-radius 4px
+      margin -10px 0 0
+      cursor pointer
+
       @media $mobile
         width 6px
 
@@ -75,12 +79,12 @@
     rangeHandle()
       width 17px
       height 17px
-      margin -7px 0 0
-      border-radius 2px
       background #605757
-      border-radius 50%
-      cursor pointer
       border 0
+      border-radius 2px
+      border-radius 50%
+      margin -7px 0 0
+      cursor pointer
 
     rangeTrack()
       width 100%

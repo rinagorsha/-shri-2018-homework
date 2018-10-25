@@ -92,12 +92,12 @@ module.exports = (env, argv) => {
         verbose: true,
         dry: false,
       }),
-    new CopyWebpackPlugin([
-      {from: 'src/images/', to: 'images'},
-    ]),
+      new CopyWebpackPlugin([
+        { from: 'src/images/', to: 'images' },
+      ]),
     ],
     devServer: {
       open: true,
     },
-  })
+  });
 };

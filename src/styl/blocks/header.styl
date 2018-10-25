@@ -1,21 +1,22 @@
 .header
   width 100%
-  padding 33px 40px 35px
   background-color #fff
   border-bottom 1px solid #f0f0f0
-  display flex
-  align-items center
-  flex 0 0 auto
-  z-index 10
+  padding 33px 40px 35px
   position fixed
   top 0
   left 0
+  z-index 10
+  display flex
+  flex 0 0 auto
+  align-items center
   transition opacity .3s, visibility .3s
+
   @media $mobile
     border-bottom none
     padding 20px
     justify-content space-between
-  
+
   .opened-video &
     opacity 0
     visibility hidden
@@ -27,15 +28,17 @@
   &__nav
     margin-top 5px
     flex 0 1 auto
+
     @media $mobile
       display none
 
   &__menu
     width 16px
     height 16px
-    background url(../images/list.svg) 50% no-repeat
+    background url('../images/list.svg') 50% no-repeat
     background-size contain
-    display inline-block
     vertical-align middle
+    display inline-block
+
     @media $more-mobile
       display none

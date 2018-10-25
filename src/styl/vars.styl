@@ -1,13 +1,12 @@
 $desktopSize = 1400px
 $tabletSize = 980px
 $mobileSize = 620px
-
-$desktop = s("only screen and (max-width: %s)", $desktopSize)
-$more-desktop = s("only screen and (min-width: %s)", $desktopSize + 1)
-$tablet = s("only screen and (max-width: %s)", $tabletSize)
-$more-tablet = s("only screen and (min-width: %s)", $tabletSize + 1)
-$mobile = s("only screen and (max-width: %s)", $mobileSize)
-$more-mobile = s("only screen and (min-width: %s)", $mobileSize + 1)
+$desktop = s('only screen and (max-width: %s)', $desktopSize)
+$more-desktop = s('only screen and (min-width: %s)', $desktopSize + 1)
+$tablet = s('only screen and (max-width: %s)', $tabletSize)
+$more-tablet = s('only screen and (min-width: %s)', $tabletSize + 1)
+$mobile = s('only screen and (max-width: %s)', $mobileSize)
+$more-mobile = s('only screen and (min-width: %s)', $mobileSize + 1)
 
 input-range(handleMixin, trackMixin)
   width 100%
@@ -21,11 +20,11 @@ input-range(handleMixin, trackMixin)
 
   &::-moz-range-thumb
     handleMixin()
-  
+
   &::-ms-thumb
     handleMixin()
     margin 0
-  
+
   &::-webkit-slider-runnable-track
     trackMixin()
 
@@ -34,10 +33,10 @@ input-range(handleMixin, trackMixin)
 
   &::-ms-track
     trackMixin()
-    cursor pointer
+    color transparent
     background transparent
     border-color transparent
-    color transparent
+    cursor pointer
 
   &:focus
     background none

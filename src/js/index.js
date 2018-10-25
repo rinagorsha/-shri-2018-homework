@@ -7,13 +7,15 @@ import Popup from './popup';
 (() => {
   let isTouchDevice = false;
 
-  if (('ontouchstart' in window) || navigator.msMaxTouchPoints || window.DocumentTouch && document instanceof DocumentTouch) {
+  if (
+    (('ontouchstart' in window) || navigator.msMaxTouchPoints) ||
+    (window.DocumentTouch && document instanceof DocumentTouch)
+  ) {
     isTouchDevice = true;
   }
 
   if (isTouchDevice) {
     document.body.classList.add('is-touch-device');
-    return;
   }
 })();
 
@@ -31,7 +33,7 @@ import Popup from './popup';
     for (let i = 0; i < titles.length; i++) {
       const item = titles[i];
       const maxHeight = parseInt(getComputedStyle(item).lineHeight, 10) * 2.5;
-      let text = item.dataset.original
+      let text = item.getAttribute('title');
       item.textContent = text;
       text = text.split(' ');
 
@@ -67,7 +69,6 @@ import Popup from './popup';
     camera.setPointerCapture(event.pointerId);
     evCache.push(event);
 
-    const {x, y} = event;
     const currentX = parseInt(getComputedStyle(image).backgroundPositionX, 10) || 0;
     const currentY = parseInt(getComputedStyle(image).backgroundPositionY, 10) || 0;
 
@@ -79,7 +80,7 @@ import Popup from './popup';
 
   camera.addEventListener('pointermove', (event) => {
     if (!gesture) {
-      return
+      return;
     }
 
     // drag
@@ -94,7 +95,7 @@ import Popup from './popup';
       // brightness
       const dx = Math.abs(evCache[0].x - evCache[1].x);
       const dy = Math.abs(evCache[0].y - evCache[1].y);
-      const diffAtan = Math.atan2(dy,dx);
+      const diffAtan = Math.atan2(dy, dx);
       image.style.filter = `brightness(${diffAtan})`;
       brightnessEl.innerText = `${Math.round(diffAtan * 100)}%`;
 
@@ -112,7 +113,7 @@ import Popup from './popup';
     }
 
     for (let i = 0; i < evCache.length; i++) {
-      if (event.pointerId == evCache[i].pointerId) {
+      if (event.pointerId === evCache[i].pointerId) {
         evCache[i] = event;
         break;
       }
@@ -121,11 +122,11 @@ import Popup from './popup';
 
   const resetGesture = () => {
     if (!gesture) {
-      return
+      return;
     }
     gesture = null;
     evCache = [];
-  }
+  };
   camera.addEventListener('pointerup', resetGesture);
   camera.addEventListener('pointercancel', resetGesture);
 })();

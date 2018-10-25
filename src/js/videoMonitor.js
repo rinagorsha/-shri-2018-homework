@@ -16,7 +16,7 @@ export default class VideoMonitor {
     this.initVideoStream();
   }
 
-  init(url) {
+  init() {
     this.container.addEventListener('click', () => this.open());
   }
 
@@ -29,7 +29,7 @@ export default class VideoMonitor {
         this.video.play();
       });
     } else if (this.video.canPlayType('application/vnd.apple.mpegurl')) {
-      this.video.src = url;
+      this.video.src = this.url;
       this.video.addEventListener('loadedmetadata', () => {
         this.video.play();
       });
@@ -45,7 +45,7 @@ export default class VideoMonitor {
     this.popup.open(this);
   }
 
-  close(brightness, contrast) {
+  close() {
     this.isOpen = false;
     this.video.muted = true;
   }

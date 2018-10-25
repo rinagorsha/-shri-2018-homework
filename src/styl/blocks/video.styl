@@ -5,9 +5,9 @@
 
   &__container
     padding-top 55%
+    position relative
     display flex
     align-items center
-    position relative
     cursor pointer
 
   &__video
@@ -19,33 +19,37 @@
     width 100%
 
   &__element
+    width calc(200% + 20px)
+    height calc(200% + 20px)
     background-color $yellow
     position absolute
     z-index 1
-    transform scale(0.49)
-
+    transform scale(.49)
     transition 10s z-index 0s, all .3s
-    width calc(200% + 20px)
-    height calc(200% + 20px)
+
     .video-monitoring__container:nth-child(1) &
       top 0
       left 0
       transform-origin 0 0
+
     .video-monitoring__container:nth-child(2) &
       top 0
       right 0
       transform-origin 100% 0
+
     .video-monitoring__container:nth-child(3) &
       bottom 0
       left 0
       transform-origin 0 100%
+
     .video-monitoring__container:nth-child(4) &
       bottom 0
       right 0
       transform-origin 100% 100%
+
     &.open
-      transform scale(1)
       z-index 100
+      transform scale(1)
 
 .video-close
   color #fff
@@ -59,18 +63,19 @@
   display flex
   align-items center
   cursor pointer
+
   @media $mobile
-     bottom calc(100% + 10px)
+    bottom calc(100% + 10px)
 
   &.open
     opacity 1
     visibility visible
 
   &:before
-    content ""
+    content ''
     width 30px
     height 30px
-    background #fff url(../images/next.svg) 50% no-repeat
+    background #fff url('../images/next.svg') 50% no-repeat
     border-radius 6px
     margin-right 10px
     display inline-block
@@ -81,14 +86,16 @@
   width 100%
   background-color $yellow
   padding 20px
-  display grid
-  grid-gap 20px
-  grid-template-columns 1fr 1fr 20%
   opacity 0
   visibility hidden
+  display grid
   transition .2s opacity .3s
+  grid-gap 20px
+  grid-template-columns 1fr 1fr 20%
+
   @media $tablet
     grid-template-columns 1fr 1fr
+
   @media $mobile
     grid-template-columns 1fr
 
@@ -102,18 +109,19 @@
 
   &__input
     width 100%
-    display block
     margin-bottom 10px
-  
+    display block
+
   &__video-canvas
     display none
 
   &__volume
     width 100%
     border 1px solid $textColor
+
     @media $tablet
       max-width 200px
-  
+
   &__motion
     max-width 100%
     position absolute

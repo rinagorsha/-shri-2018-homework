@@ -30,8 +30,8 @@ export default class Popup {
     this.audioCtx = null;
     this.analyser = null;
     this.sourceNodes = {};
-    this.dataArrayAlt;
-    this.bufferLengthAlt;
+    this.dataArrayAlt = null;
+    this.bufferLengthAlt = null;
 
     this.motionDetector = new MotionDetector(this.videoCanvas, this.canvasMotion);
 
@@ -47,7 +47,7 @@ export default class Popup {
     window.addEventListener('keydown', (e) => {
       if (e.keyCode === 27) this.close();
     });
-    this.closeButton.addEventListener('click', this.close.bind(this))
+    this.closeButton.addEventListener('click', this.close.bind(this));
 
     this.inputBrightness.addEventListener('change', (e) => {
       this.brightnessValue = e.target.value;
@@ -75,7 +75,7 @@ export default class Popup {
     this.videoCanvas.height = mediaElement.video.offsetHeight;
     this.canvasMotion.width = mediaElement.video.offsetWidth;
     this.canvasMotion.height = mediaElement.video.offsetHeight;
-    
+
     document.body.classList.add('opened-video');
     this.node.classList.add('open');
     this.mediaElement.container.classList.add('open');
@@ -83,7 +83,7 @@ export default class Popup {
     this.inputBrightness.value = this.mediaElement.brightnessValue;
     this.inputContrast.value = this.mediaElement.contrastValue;
 
-    this.motionDetector.init(mediaElement.video.offsetWidth, mediaElement.video.offsetHeight)
+    this.motionDetector.init(mediaElement.video.offsetWidth, mediaElement.video.offsetHeight);
 
     this.intervalID = setInterval(() => this.calcIllumination(), this.TICK);
     this.videoIntervalID = setInterval(() => this.drawVideo(), this.TICK);
@@ -117,7 +117,7 @@ export default class Popup {
    * Используется для вычисления уровня освещенности и определения движения
    */
   drawVideo() {
-    const {width, height} = this.videoCanvas;
+    const { width, height } = this.videoCanvas;
     this.videoCanvasCtx.drawImage(this.mediaElement.video, 0, 0, width, height);
   }
 
@@ -126,15 +126,15 @@ export default class Popup {
    * по формуле https://www.w3.org/TR/AERT/#color-contrast
    */
   calcIllumination() {
-    const {width, height} = this.videoCanvas;
+    const { width, height } = this.videoCanvas;
     const imageData = this.videoCanvasCtx.getImageData(0, 0, width, height);
-    const {data} = imageData;
+    const { data } = imageData;
 
     let illumination = 0;
     for (let i = 0; i < data.length; i += 4) {
-      illumination += (299 * data[i] + 587 * data[i+1] + 114 * data[i+2]) / 1000;
+      illumination += (299 * data[i] + 587 * data[i + 1] + 114 * data[i + 2]) / 1000;
     }
-    illumination = illumination / data.length;
+    illumination /= data.length;
     this.illuminationValue = illumination;
     this.illuminationOutput.innerText = Math.round(illumination * 10) / 10;
   }
@@ -146,7 +146,7 @@ export default class Popup {
       this.audioNode = this.audioCtx.createMediaElementSource(this.mediaElement.video);
       this.sourceNodes[id] = this.audioNode;
     }
-    this.audioNode.connect(this.analyser).connect(this.audioCtx.destination)
+    this.audioNode.connect(this.analyser).connect(this.audioCtx.destination);
 
     this.bufferLengthAlt = this.analyser.frequencyBinCount;
     this.dataArrayAlt = new Uint8Array(this.bufferLengthAlt);
@@ -158,8 +158,7 @@ export default class Popup {
    * Рисует громкость звука в виде столбчатой диаграммы
    */
   audioVisualizing() {
-    const width = this.audioCanvas.width;
-    const height = this.audioCanvas.height;
+    const { width, height } = this.audioCanvas;
 
     this.analyser.getByteFrequencyData(this.dataArrayAlt);
 
@@ -170,11 +169,11 @@ export default class Popup {
     let barHeight;
     let x = 0;
 
-    for(let i = 0; i < this.bufferLengthAlt; i++) {
+    for (let i = 0; i < this.bufferLengthAlt; i++) {
       barHeight = this.dataArrayAlt[i];
 
       this.audioCanvasCtx.fillStyle = 'rgb(' + (barHeight + 100) + ', 50, 50)';
-      this.audioCanvasCtx.fillRect(x, height - barHeight / 2, barWidth, barHeight/2);
+      this.audioCanvasCtx.fillRect(x, height - barHeight / 2, barWidth, barHeight / 2);
 
       x += barWidth + 1;
     }

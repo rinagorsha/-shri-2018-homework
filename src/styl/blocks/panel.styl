@@ -3,34 +3,41 @@
   border-radius 20px
   position relative
   display flex
-  flex-direction column
-  align-items flex-start
   display flex
   flex 0 0 auto
-  align-items stretch
   flex-direction column
+  flex-direction column
+  align-items flex-start
+  align-items stretch
   transition all .3s ease
+
   &:hover
     @media $more-mobile
       background-color $grayDark
       box-shadow 0 2px 6px alpha(#c5baba, .5)
+
   &_critical
     background-color $red
+
     &.panel_has-content
-      border-bottom-left-radius 30px
       border-bottom-right-radius 30px
+      border-bottom-left-radius 30px
+
     &:hover
       background-color $red
+
   &_l
     @media $more-tablet
       font-size 2.4rem
 
   &__header
     width 100%
-    padding 22px 20px
     border-radius 20px
+    padding 22px 20px
+
     @media $mobile
       padding 16px
+
     .panel_critical &
       color #fff
 
@@ -40,24 +47,30 @@
     padding 0 20px 20px
     display flex
     flex 1 1 auto
-    align-items stretch
     flex-direction column
+    align-items stretch
     transition background-color .3s ease
+
     .panel:hover &
       @media $more-mobile
         background-color $grayDark
+
     @media $mobile
       padding 16px
       padding-top 0
+
     .panel_critical &
       padding-top 20px
+
       @media $mobile
         padding-top 16px
-  
+
   &__line
     margin-bottom 20px
+
     @media $mobile
       margin-bottom 16px
+
     &:last-child
       margin-top auto
       margin-bottom 0
@@ -65,30 +78,33 @@
   &__title
     font-size 2.4rem
     font-weight 700
+    margin-bottom 20px
     display flex
     align-items center
-    margin-bottom 20px
+
     @media $mobile
       font-size 1.56rem
       margin-bottom 16px
 
   &__icon
-    flex 0 0 auto
     margin-right 20px
+    flex 0 0 auto
+
     @media $mobile
       margin-right 16px
 
   &__name
     overflow hidden
     flex 0 1 auto
-  
+
   &__player
     margin-top 10px
-  
+
   &__buttons
     display grid
     grid-template-columns repeat(auto-fit, 130px)
     grid-gap 20px
+
     @media $mobile
       justify-content space-between
 
@@ -98,71 +114,82 @@
     vertical-align middle
 
   &__action
-    box-shadow-params = 0px 0px 5px 5px
+    box-shadow-params = 0 0 5px 5px
     width 25px
     height @width
     background-color $grayDark
     background-position 50%
     background-repeat no-repeat
     border-radius 50%
-    position absolute
-    right 15px
     opacity 0
     visibility hidden
-    transition all .3s ease
+    position absolute
+    right 15px
     cursor pointer
+    transition all .3s ease
+
     body.is-touch-device &
       display none
+
     @media $mobie
       display none
 
     &_arrow
-      bottom 15px
-      background-image url(../images/next.svg)
+      background-image url('../images/next.svg')
       box-shadow box-shadow-params $grayDark
+      bottom 15px
+
       @media $tablet
         bottom 6px
+
       &-critical
         background-color $red
-        background-image url(../images/next-white.svg)
+        background-image url('../images/next-white.svg')
         box-shadow box-shadow-params $red
 
     &_close
-      top 15px
-      background-image url(../images/cross.svg)
+      background-image url('../images/cross.svg')
       box-shadow box-shadow-params $grayDark
+      top 15px
+
       @media $tablet
         top 6px
+
       &-critical
         background-color $red
-        background-image url(../images/cross-white.svg)
+        background-image url('../images/cross-white.svg')
         box-shadow box-shadow-params $red
 
     .panel:hover &
-      visibility visible
       opacity 1
+      visibility visible
 
 .panel-info
   font-size 1.33rem
   display flex
+  flex-wrap wrap
   justify-content space-between
   align-items center
-  flex-wrap wrap
+
   @media $mobile
     font-size 1.33rem
+
   &_s
     @media $more-tablet
       display block
+
   &_temperature
     @media $mobile
       font-size 1.56rem
 
   &__item
     margin-right 10px
+
     .panel-info_s &
       @media $more-tablet
         margin-bottom 20px
         margin-right 0
+
     &:last-child
-      margin-right 0
       margin-bottom 0
+      margin-right 0

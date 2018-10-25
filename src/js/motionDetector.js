@@ -1,11 +1,17 @@
 export default class MotionDetector {
-  constructor(canvasSource, canvasMotion, chunkSize = 20, thresholdDiff = 21, whitePercentThreshold = 30) {
+  constructor(
+    canvasSource,
+    canvasMotion,
+    chunkSize = 20,
+    thresholdDiff = 21,
+    whitePercentThreshold = 30,
+  ) {
     this.canvasSource = canvasSource;
     this.contextSource = canvasSource.getContext('2d');
-    
+
     this.canvasMotion = canvasMotion;
     this.contextMotion = canvasMotion.getContext('2d');
-    
+
     this.blendedData = null;
     this.lastImageData = null;
 
@@ -41,7 +47,7 @@ export default class MotionDetector {
   blend() {
     const width = this.getWidth();
     const height = this.getHeight();
-    
+
     const sourceData = this.contextSource.getImageData(0, 0, width, height);
     if (!this.lastImageData) this.lastImageData = sourceData;
 
@@ -54,19 +60,25 @@ export default class MotionDetector {
    * Сохраняет разницу в target
    * Результат представляет собой rgba массив с черно-белым изображением
    * Белым помечается разница между кадрами (движение)
+   *
+   * Мутирует target, чтобы не копировать такие объемные данные
    */
   differenceAccuracy(target, data1, data2) {
     if (data1.length !== data2.length) return null;
-    for(let i = 0; i < data1.length; i += 4) {
-      const average1 = (data1[i] + data1[i+1] + data1[i+2]) / 3;
-      const average2 = (data2[i] + data2[i+1] + data2[i+2]) / 3;
+    for (let i = 0; i < data1.length; i += 4) {
+      const average1 = (data1[i] + data1[i + 1] + data1[i + 2]) / 3;
+      const average2 = (data2[i] + data2[i + 1] + data2[i + 2]) / 3;
       const diff = this.threshold(Math.abs(average1 - average2));
 
+      /* eslint-disable no-param-reassign */
       target[i] = diff;
-      target[i+1] = diff;
-      target[i+2] = diff;
-      target[i+3] = 255;
+      target[i + 1] = diff;
+      target[i + 2] = diff;
+      target[i + 3] = 255;
+      /* eslint-enable */
     }
+
+    return target;
   }
 
   /**
@@ -86,8 +98,8 @@ export default class MotionDetector {
     const width = this.getWidth();
     const height = this.getHeight();
 
-    let min = [Infinity, Infinity];
-    let max = [0, 0];
+    const min = [Infinity, Infinity];
+    const max = [0, 0];
     for (let row = 0; row < height; row += this.CHUNK_SIZE) {
       for (let col = 0; col < width; col += this.CHUNK_SIZE) {
         const average = this.calcWhitePercent(row, col);
@@ -98,7 +110,12 @@ export default class MotionDetector {
         if (row > max[1]) max[1] = row;
       }
     }
-    this.drawRect(min[0], min[1], max[0] - min[0] + this.CHUNK_SIZE, max[1] - min[1]+ this.CHUNK_SIZE)
+    this.drawRect(
+      min[0],
+      min[1],
+      max[0] - min[0] + this.CHUNK_SIZE,
+      max[1] - min[1] + this.CHUNK_SIZE,
+    );
   }
 
   /**
@@ -106,14 +123,14 @@ export default class MotionDetector {
    */
   calcWhitePercent(row, col) {
     const sum = this.calcChunk(row, col);
-    return sum / 255 / (this.CHUNK_SIZE**2) * 100;
+    return sum / 255 / (this.CHUNK_SIZE ** 2) * 100;
   }
 
   /**
    * Считает сумму цвета всех пикселей в чанке
    * index -- значение RED для пикселя
    * Все пиксели либо черные, либо белые, поэтому достаточно считать только RED составляющую пикселя
-   * 
+   *
    * Позволяет не рендерить дополнительную blendedCanvas:
    * Заменяет this.ctx.getImageData(col, row, this.CHUNK_SIZE, this.CHUNK_SIZE)
    */
@@ -124,7 +141,7 @@ export default class MotionDetector {
     let sum = 0;
     for (let row = startRow; row < height && row < startRow + this.CHUNK_SIZE; row++) {
       for (let col = startCol; col < width && col < startCol + this.CHUNK_SIZE; col++) {
-        const index = row * width*4 + col*4;
+        const index = row * width * 4 + col * 4;
         sum += this.blendedData.data[index];
       }
     }

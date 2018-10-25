@@ -10,19 +10,23 @@
 
   &__image
     height 420px
-    background-image url(../images/image3x.png)
+    background-image url('../images/image3x.png')
     background-size cover
+
     @media $tablet
-      background-image url(../images/image2x.png)
+      background-image url('../images/image2x.png')
+
     @media $mobile
       height 350px
-      background-image url(../images/image.png)
+      background-image url('../images/image.png')
+
     body:not(.is-touch-device) &
-      background-repeat no-repeat
       background-size cover
+      background-repeat no-repeat
 
   &__info
     margin-top 20px
+
     @media $mobile
       margin-top 15px
 

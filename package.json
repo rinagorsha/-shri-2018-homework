@@ -6,7 +6,10 @@
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "compile": "webpack --mode production",
-    "server": "nodemon ./server/index"
+    "server": "nodemon ./server/index",
+    "lint": "npm run lint-eslint & npm run lint-stylelint",
+    "lint-eslint": "eslint src --cache --ext .js --fix",
+    "lint-stylelint": "stylus-supremacy format src/styl/*.styl src/styl/**/*.styl --replace --options stylus-supremacy.config.json"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +22,9 @@
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.3",
@@ -27,6 +33,7 @@
     "pug-html-loader": "^1.1.5",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
+    "stylus-supremacy": "^2.12.7",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.9"
