@@ -1,6 +1,6 @@
 import MotionDetector from './motionDetector';
 
-export default class Popup {
+export default class VideoController {
   constructor(node) {
     this.node = node;
     this.closeButton = document.getElementById('video-monitoring-close');

@@ -1,6 +1,6 @@
 import VideoMonitor from './videoMonitor';
-import Popup from './popup';
-import initCameraControll from './cameraControll';
+import VideoController from './videoController';
+import initCameraController from './cameraController';
 
 /**
  * Проверяет, тачевое ли устройство
@@ -8,10 +8,7 @@ import initCameraControll from './cameraControll';
 (() => {
   let isTouchDevice = false;
 
-  if (
-    (('ontouchstart' in window) || navigator.msMaxTouchPoints) ||
-    (window.DocumentTouch && document instanceof DocumentTouch)
-  ) {
+  if (('ontouchstart' in window) || navigator.msMaxTouchPoints) {
     isTouchDevice = true;
   }
 
@@ -49,7 +46,7 @@ import initCameraControll from './cameraControll';
 /**
  * Работа камеры
  */
-initCameraControll();
+initCameraController();
 
 /**
  * Видеонаблюдение
@@ -65,12 +62,12 @@ initCameraControll();
   const popupElement = document.getElementById('video-monitoring-popup');
   if (!elements.length || !popupElement) return;
 
-  const popup = new Popup(popupElement);
+  const controller = new VideoController(popupElement);
   for (let i = 0; i < elements.length; i++) {
     elements[i].videoMonitor = new VideoMonitor(
       elements[i],
       urls[i],
-      popup,
+      controller,
     );
   }
 })();
