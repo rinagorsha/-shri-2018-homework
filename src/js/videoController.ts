@@ -25,6 +25,7 @@ export default class VideoController {
 
   intervalID: number | undefined;
   audioIntervalID: number | undefined;
+  videoIntervalID: number | undefined;
   motionIntervalID: number | undefined;
 
   TICK: number;
@@ -68,6 +69,7 @@ export default class VideoController {
     this.illuminationValue = null;
 
     this.intervalID = undefined;
+    this.videoIntervalID = undefined;
     this.audioIntervalID = undefined;
     this.motionIntervalID = undefined;
 
@@ -132,14 +134,14 @@ export default class VideoController {
     this.motionDetector.init(mediaElement.video.offsetWidth, mediaElement.video.offsetHeight);
 
     this.intervalID = setInterval(() => this.calcIllumination(), this.TICK);
-    this.audioIntervalID = setInterval(() => this.drawVideo(), this.TICK);
+    this.videoIntervalID = setInterval(() => this.drawVideo(), this.TICK);
     this.motionIntervalID = setInterval(() => this.motionDetector.update(), this.TICK);
     this.initAnalyser();
   }
 
   close(): void {
     clearInterval(this.intervalID);
-    clearInterval(this.audioIntervalID);
+    clearInterval(this.videoIntervalID);
     clearInterval(this.motionIntervalID);
     clearInterval(this.audioIntervalID);
     if (this.audioNode) this.audioNode.disconnect(this.analyser);
