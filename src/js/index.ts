@@ -6,7 +6,6 @@ declare global {
   interface Window {
     AudioContext: { new(): AudioContext },
     webkitAudioContext: { new(): AudioContext },
-    DocumentTouch: { new(): AudioContext },
   }
 }
 

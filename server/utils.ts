@@ -53,7 +53,7 @@ export function preparePaginationParams(
   return result;
 }
 
-export function filterEvents(query: string, eventsJson: eventsJsonType): eventsJsonType {
+export function filterEvents(eventsJson: eventsJsonType, query?: string): eventsJsonType {
   if (!query) return eventsJson;
   const types: string[] = query.split(':');
 

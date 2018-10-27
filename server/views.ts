@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import express from 'express';
+import { Response } from 'express';
 
 import {
   checkFilter,
@@ -11,11 +11,11 @@ import {
 
 import {paginationResultType, eventsJsonType} from './types';
 
-function eventsView(
-  res: any,
-  type: string,
-  queryLimit: string,
-  queryPage: string
+export function eventsView(
+  res: Response,
+  type?: string,
+  queryLimit?: string,
+  queryPage?: string
 ): void {
   // Если невалидный запрос
   if (type && !checkFilter(type)) {
@@ -37,7 +37,7 @@ function eventsView(
 
     const eventsJson: eventsJsonType = JSON.parse(data);
 
-    let result = filterEvents(type, eventsJson);
+    let result = filterEvents(eventsJson, type);
     result = pagitateEvents(result, limit, page);
   
     if (!result.events.length) {
@@ -50,5 +50,3 @@ function eventsView(
   });
 
 }
-
-module.exports.eventsView = eventsView;
