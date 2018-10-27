@@ -1,11 +1,13 @@
-import VideoMonitor from './videoMonitor';
-import VideoController from './videoController';
 import initCameraController from './cameraController';
+import VideoController from './videoController';
+import VideoMonitor from './videoMonitor';
 
+// tslint:disable-next-line
 declare global {
+  // tslint:disable-next-line
   interface Window {
-    AudioContext: { new(): AudioContext },
-    webkitAudioContext: { new(): AudioContext },
+    AudioContext: typeof AudioContext,
+    webkitAudioContext: typeof AudioContext,
   }
 }
 
@@ -35,6 +37,7 @@ declare global {
   window.addEventListener('resize', truncate);
 
   function truncate() {
+    // tslint:disable-next-line
     for (let i = 0; i < titles.length; i++) {
       const item: HTMLElement = titles[i];
       const lineHeight: string = getComputedStyle(item).lineHeight || '1';
@@ -69,15 +72,29 @@ initCameraController();
   ];
   const elements: NodeListOf<HTMLElement> = document.querySelectorAll('.js-monitoring-element');
 
-  const popupElement: HTMLElement | null = document.getElementById('video-monitoring-popup');
-  const videoCanvas: HTMLCanvasElement | null = <HTMLCanvasElement> document.getElementById('video-monitoring-video');
-  const audioCanvas: HTMLCanvasElement | null = <HTMLCanvasElement> document.getElementById('video-monitoring-audio');
-  const canvasMotion: HTMLCanvasElement | null = <HTMLCanvasElement> document.getElementById('video-monitoring-motion');
+  const popupElement: HTMLElement | null =
+    document.getElementById('video-monitoring-popup');
 
-  const closeButton: HTMLElement | null = document.getElementById('video-monitoring-close');
-  const illuminationOutput: HTMLElement | null = document.getElementById('video-monitoring-illumination');
-  const inputBrightness: HTMLInputElement | null = <HTMLInputElement> document.getElementById('video-input-brightness');
-  const inputContrast: HTMLInputElement | null = <HTMLInputElement> document.getElementById('video-input-contrast');
+  const videoCanvas: HTMLCanvasElement | null =
+    document.getElementById('video-monitoring-video') as HTMLCanvasElement;
+
+  const audioCanvas: HTMLCanvasElement | null =
+    document.getElementById('video-monitoring-audio') as HTMLCanvasElement;
+
+  const canvasMotion: HTMLCanvasElement | null =
+    document.getElementById('video-monitoring-motion') as HTMLCanvasElement;
+
+  const closeButton: HTMLElement | null =
+    document.getElementById('video-monitoring-close');
+
+  const illuminationOutput: HTMLElement | null =
+    document.getElementById('video-monitoring-illumination');
+
+  const inputBrightness: HTMLInputElement | null =
+    document.getElementById('video-input-brightness') as HTMLInputElement;
+
+  const inputContrast: HTMLInputElement | null =
+    document.getElementById('video-input-contrast') as HTMLInputElement;
 
   if (
     !elements.length ||
@@ -89,24 +106,26 @@ initCameraController();
     !illuminationOutput ||
     !inputBrightness ||
     !inputContrast
-  ) return;
+  ) {
+    return;
+  }
 
   const controller: VideoController = new VideoController({
-    node: popupElement,
-    videoCanvas,
     audioCanvas,
     canvasMotion,
     closeButton,
+    illuminationOutput,
     inputBrightness,
     inputContrast,
-    illuminationOutput,
+    node: popupElement,
+    videoCanvas,
   });
-
 
   for (let i = 0; i < elements.length; i++) {
     const video: HTMLVideoElement | null = elements[i].querySelector('.js-monitoring-video');
     if (!video) continue;
 
+    // tslint:disable-next-line
     new VideoMonitor(
       elements[i],
       video,

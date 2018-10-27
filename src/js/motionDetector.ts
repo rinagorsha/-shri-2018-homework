@@ -1,19 +1,19 @@
 export default class MotionDetector {
-  canvasSource: HTMLCanvasElement;
-  contextSource: CanvasRenderingContext2D;
+  public canvasSource: HTMLCanvasElement;
+  public contextSource: CanvasRenderingContext2D;
 
-  canvasMotion: HTMLCanvasElement;
-  contextMotion: CanvasRenderingContext2D;
+  public canvasMotion: HTMLCanvasElement;
+  public contextMotion: CanvasRenderingContext2D;
 
-  blendedData: ImageData | null;
-  lastImageData: ImageData | null;
+  public blendedData: ImageData | null;
+  public lastImageData: ImageData | null;
 
-  CHUNK_SIZE: number;
-  THRESHOLD_DIFF: number;
-  WHITE_PERCENT_THRESHOLD: number;
+  public CHUNK_SIZE: number;
+  public THRESHOLD_DIFF: number;
+  public WHITE_PERCENT_THRESHOLD: number;
 
-  MOTION_RECT_COLOR: string;
-  MOTION_RECT_STROKE: string;
+  public MOTION_RECT_COLOR: string;
+  public MOTION_RECT_STROKE: string;
 
   constructor(
     canvasSource: HTMLCanvasElement,
@@ -39,20 +39,20 @@ export default class MotionDetector {
     this.MOTION_RECT_STROKE = '3';
   }
 
-  init(width: number, height: number): void {
+  public init(width: number, height: number): void {
     this.blendedData = this.contextSource.createImageData(width, height);
   }
 
-  update(): void {
+  public update(): void {
     this.blend();
     this.motionDetection();
   }
 
-  getWidth(): number {
+  public getWidth(): number {
     return this.canvasSource.width;
   }
 
-  getHeight(): number {
+  public getHeight(): number {
     return this.canvasSource.height;
   }
 
@@ -60,15 +60,16 @@ export default class MotionDetector {
    * Считает разницу между предыдущим и текущим кадрами
    * Результат сохраняется в this.blendedData
    */
-  blend(): void {
+  public blend(): void {
     const width = this.getWidth();
     const height = this.getHeight();
 
     const sourceData = this.contextSource.getImageData(0, 0, width, height);
     if (!this.lastImageData) this.lastImageData = sourceData;
 
-    if(this.blendedData)
+    if (this.blendedData) {
       this.differenceAccuracy(this.blendedData.data, sourceData.data, this.lastImageData.data);
+    }
     this.lastImageData = sourceData;
   }
 
@@ -80,12 +81,13 @@ export default class MotionDetector {
    *
    * Мутирует target, чтобы не копировать такие объемные данные
    */
-  differenceAccuracy(
+  public differenceAccuracy(
     target: Uint8ClampedArray,
     data1: Uint8ClampedArray,
-    data2: Uint8ClampedArray
+    data2: Uint8ClampedArray,
   ): Uint8ClampedArray {
     if (data1.length !== data2.length) return target;
+
     for (let i = 0; i < data1.length; i += 4) {
       const average1 = (data1[i] + data1[i + 1] + data1[i + 2]) / 3;
       const average2 = (data2[i] + data2[i + 1] + data2[i + 2]) / 3;
@@ -106,7 +108,7 @@ export default class MotionDetector {
    * Решает, находится ли разница между предыдущим и текущим пикселями
    * в допустимом пределе
    */
-  threshold(value: number): 255 | 0 {
+  public threshold(value: number): 255 | 0 {
     return (value > this.THRESHOLD_DIFF) ? 255 : 0;
   }
 
@@ -115,7 +117,7 @@ export default class MotionDetector {
    * Идет чанками CHUNK_SIZE по разнице между кадрами (this.blendedData)
    * Движение есть, если в чанке процент содержания белого больше, чем WHITE_PERCENT_THRESHOLD
    */
-  motionDetection(): void {
+  public motionDetection(): void {
     const width = this.getWidth();
     const height = this.getHeight();
 
@@ -142,7 +144,7 @@ export default class MotionDetector {
   /**
    * Считает процент содержания белого в чанке
    */
-  calcWhitePercent(row: number, col: number): number {
+  public calcWhitePercent(row: number, col: number): number {
     const sum: number = this.calcChunk(row, col);
     return sum / 255 / (this.CHUNK_SIZE ** 2) * 100;
   }
@@ -155,7 +157,7 @@ export default class MotionDetector {
    * Позволяет не рендерить дополнительную blendedCanvas:
    * Заменяет this.ctx.getImageData(col, row, this.CHUNK_SIZE, this.CHUNK_SIZE)
    */
-  calcChunk(startRow: number, startCol: number): number {
+  public calcChunk(startRow: number, startCol: number): number {
     if (!this.blendedData) return 0;
 
     const width = this.getWidth();
@@ -175,7 +177,7 @@ export default class MotionDetector {
   /**
    * Рисует границы дыидения на canvasMotion
    */
-  drawRect(startX: number, startY: number, endX: number, endY: number): void {
+  public drawRect(startX: number, startY: number, endX: number, endY: number): void {
     const width = this.getWidth();
     const height = this.getHeight();
 

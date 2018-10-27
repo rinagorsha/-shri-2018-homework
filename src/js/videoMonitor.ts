@@ -2,15 +2,20 @@ import Hls from 'hls.js';
 import VideoController from './videoController';
 
 export default class VideoMonitor {
-  isOpen: boolean;
-  url: string;
-  container: HTMLElement;
-  video: HTMLVideoElement;
-  popup: VideoController;
-  brightnessValue: number;
-  contrastValue: number;
+  public isOpen: boolean;
+  public url: string;
+  public container: HTMLElement;
+  public video: HTMLVideoElement;
+  public popup: VideoController;
+  public brightnessValue: number;
+  public contrastValue: number;
 
-  constructor(container: HTMLElement, video: HTMLVideoElement, url: string, popup: VideoController) {
+  constructor(
+    container: HTMLElement,
+    video: HTMLVideoElement,
+    url: string,
+    popup: VideoController,
+  ) {
     this.isOpen = false;
 
     this.url = url;
@@ -27,11 +32,11 @@ export default class VideoMonitor {
     this.initVideoStream();
   }
 
-  init() {
+  public init() {
     this.container.addEventListener('click', () => this.open());
   }
 
-  initVideoStream(): void {
+  public initVideoStream(): void {
     if (Hls.isSupported()) {
       const hls = new Hls();
       hls.loadSource(this.url);
@@ -47,7 +52,7 @@ export default class VideoMonitor {
     }
   }
 
-  open(): void {
+  public open(): void {
     if (this.isOpen) return;
     this.isOpen = true;
     this.video.muted = false;
@@ -56,7 +61,7 @@ export default class VideoMonitor {
     this.popup.open(this);
   }
 
-  close(): void {
+  public close(): void {
     this.isOpen = false;
     this.video.muted = true;
   }

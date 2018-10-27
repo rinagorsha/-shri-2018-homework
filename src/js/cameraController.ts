@@ -1,6 +1,6 @@
-type gesture = {
-  startX: number,
-  startY: number,
+interface IGesture {
+  startX: number;
+  startY: number;
 }
 
 export default () => {
@@ -12,7 +12,7 @@ export default () => {
   if (!camera || !image || !scaleEl || !brightnessEl) return;
 
   let evCache: PointerEvent[] = [];
-  let gesture: gesture | null = null;
+  let gesture: IGesture | null = null;
   let prevScaleDiff: number = -1;
   let currentScale: number = 1;
 

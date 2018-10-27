@@ -1,17 +1,17 @@
 const TYPES = ['info', 'critical'];
-import {eventItemType, eventsJsonType, paginationResultType} from './types';
+import { IeventItemType, IeventsJsonType, IpaginationResultType } from './types';
 
 export function pad(num: string, length: number = 2, symb: string = '0'): string {
   const n = num.toString();
   return n.length >= length ? n : pad(symb + n, length, symb);
 }
 
-export function dateDiff(date1: Date, date2: Date):string {
-  let diff = +date2 - +date1;
+export function dateDiff(date1: Date, date2: Date): string {
+  const diff = +date2 - +date1;
 
-  let hours: number = Math.floor(diff / 60 / 60 / 1000);
-  let minutes: number = Math.floor(diff / 60 / 1000) % 60;
-  let seconds: number = Math.floor(diff / 1000) % 60;
+  const hours: number = Math.floor(diff / 60 / 60 / 1000);
+  const minutes: number = Math.floor(diff / 60 / 1000) % 60;
+  const seconds: number = Math.floor(diff / 1000) % 60;
 
   return `${pad(hours.toString())}:${pad(minutes.toString())}:${pad(seconds.toString())}`;
 }
@@ -24,14 +24,14 @@ export function dateDiff(date1: Date, date2: Date):string {
  */
 export function preparePaginationParams(
   queryLimit: string = '0',
-  queryPage: string = '1'
-): paginationResultType {
+  queryPage: string = '1',
+): IpaginationResultType {
   const limit: number = +queryLimit;
   const page: number = +queryPage;
-  const result: paginationResultType = {
+  const result: IpaginationResultType = {
     errors: false,
-    page: 1,
     limit: 0,
+    page: 1,
   };
 
   if (isNaN(limit) || isNaN(page) || limit < 0 || page <= 0) {
@@ -53,28 +53,32 @@ export function preparePaginationParams(
   return result;
 }
 
-export function filterEvents(eventsJson: eventsJsonType, query?: string): eventsJsonType {
+export function filterEvents(eventsJson: IeventsJsonType, query?: string): IeventsJsonType {
   if (!query) return eventsJson;
   const types: string[] = query.split(':');
 
-  const dataEvents = [...eventsJson.events]
+  const dataEvents = [...eventsJson.events];
 
-  const filtredEvents = dataEvents.filter(item => types.includes(item.type) );
+  const filtredEvents = dataEvents.filter(item => types.includes(item.type));
 
   return {
     ...eventsJson,
     events: filtredEvents,
-  }
+  };
 }
 
-export function pagitateEvents(data: eventsJsonType, limit: number, page: number): eventsJsonType {
+export function pagitateEvents(
+  data: IeventsJsonType,
+  limit: number,
+  page: number,
+): IeventsJsonType {
   const startIndex: number = (page - 1) * limit;
   const endIndex: number = limit ? startIndex + limit : data.events.length;
-  const events: eventItemType[] = data.events.slice(startIndex, endIndex);
+  const events: IeventItemType[] = data.events.slice(startIndex, endIndex);
   return {
     ...data,
     events,
-  }
+  };
 }
 
 export function checkFilter(filters: string): boolean {

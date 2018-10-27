@@ -1,52 +1,52 @@
 import MotionDetector from './motionDetector';
 import VideoMonitor from './videoMonitor';
 
-type VideoControllerType = {
-  node: HTMLElement,
-  videoCanvas: HTMLCanvasElement,
-  audioCanvas: HTMLCanvasElement,
-  canvasMotion: HTMLCanvasElement,
-  closeButton: HTMLElement,
-  inputBrightness: HTMLInputElement,
-  inputContrast: HTMLInputElement,
-  illuminationOutput: HTMLElement,
-}
-
-export default class VideoController {
+interface IVideoControllerType {
   node: HTMLElement;
+  videoCanvas: HTMLCanvasElement;
+  audioCanvas: HTMLCanvasElement;
+  canvasMotion: HTMLCanvasElement;
   closeButton: HTMLElement;
   inputBrightness: HTMLInputElement;
   inputContrast: HTMLInputElement;
   illuminationOutput: HTMLElement;
+}
 
-  brightnessValue: number;
-  contrastValue: number;
-  illuminationValue: number | null;
+export default class VideoController {
+  public node: HTMLElement;
+  public closeButton: HTMLElement;
+  public inputBrightness: HTMLInputElement;
+  public inputContrast: HTMLInputElement;
+  public illuminationOutput: HTMLElement;
 
-  intervalID: number | undefined;
-  audioIntervalID: number | undefined;
-  videoIntervalID: number | undefined;
-  motionIntervalID: number | undefined;
+  public brightnessValue: number;
+  public contrastValue: number;
+  public illuminationValue: number | null;
 
-  TICK: number;
-  ANALYSER_FFTSIZE: number;
+  public intervalID: number | undefined;
+  public audioIntervalID: number | undefined;
+  public videoIntervalID: number | undefined;
+  public motionIntervalID: number | undefined;
 
-  mediaElement: VideoMonitor | null;
-  videoCanvas: HTMLCanvasElement;
-  videoCanvasCtx: CanvasRenderingContext2D;
+  public TICK: number;
+  public ANALYSER_FFTSIZE: number;
 
-  canvasMotion: HTMLCanvasElement;
+  public mediaElement: VideoMonitor | null;
+  public videoCanvas: HTMLCanvasElement;
+  public videoCanvasCtx: CanvasRenderingContext2D;
 
-  audioCanvas: HTMLCanvasElement;
-  audioCanvasCtx: CanvasRenderingContext2D;
-  audioCtx: AudioContext;
-  analyser: AnalyserNode;
-  audioNode: MediaElementAudioSourceNode | null;
-  sourceNodes: { [s: string]: MediaElementAudioSourceNode };
-  dataArrayAlt: Uint8Array;
-  bufferLengthAlt: number;
+  public canvasMotion: HTMLCanvasElement;
 
-  motionDetector: MotionDetector;
+  public audioCanvas: HTMLCanvasElement;
+  public audioCanvasCtx: CanvasRenderingContext2D;
+  public audioCtx: AudioContext;
+  public analyser: AnalyserNode;
+  public audioNode: MediaElementAudioSourceNode | null;
+  public sourceNodes: { [s: string]: MediaElementAudioSourceNode };
+  public dataArrayAlt: Uint8Array;
+  public bufferLengthAlt: number;
+
+  public motionDetector: MotionDetector;
 
   constructor({
     node,
@@ -57,7 +57,7 @@ export default class VideoController {
     inputBrightness,
     inputContrast,
     illuminationOutput,
-  }: VideoControllerType) {
+  }: IVideoControllerType) {
     this.node = node;
     this.closeButton = closeButton;
     this.inputBrightness = inputBrightness;
@@ -96,7 +96,7 @@ export default class VideoController {
     this.init();
   }
 
-  init(): void {
+  public init(): void {
     this.analyser.fftSize = this.ANALYSER_FFTSIZE;
 
     // Закрывает popup на клавишу Esc
@@ -106,17 +106,17 @@ export default class VideoController {
     this.closeButton.addEventListener('click', this.close.bind(this));
 
     this.inputBrightness.addEventListener('input', (e: Event) => {
-      this.brightnessValue = +(<HTMLInputElement>e.target).value;
+      this.brightnessValue = +(e.target as HTMLInputElement).value;
       this.applyFilter();
     });
 
     this.inputContrast.addEventListener('input', (e) => {
-      this.contrastValue = +(<HTMLInputElement>e.target).value;
+      this.contrastValue = +(e.target as HTMLInputElement).value;
       this.applyFilter();
     });
   }
 
-  open(mediaElement: VideoMonitor): void {
+  public open(mediaElement: VideoMonitor): void {
     this.mediaElement = mediaElement;
 
     this.videoCanvas.width = mediaElement.video.offsetWidth;
@@ -139,7 +139,7 @@ export default class VideoController {
     this.initAnalyser();
   }
 
-  close(): void {
+  public close(): void {
     clearInterval(this.intervalID);
     clearInterval(this.videoIntervalID);
     clearInterval(this.motionIntervalID);
@@ -149,17 +149,18 @@ export default class VideoController {
     this.node.classList.remove('open');
     this.closeButton.classList.remove('open');
     document.body.classList.remove('opened-video');
-    
+
     if (!this.mediaElement) return;
     this.mediaElement.container.classList.remove('open');
     this.mediaElement.close();
     this.mediaElement = null;
   }
 
-  applyFilter(): void {
+  public applyFilter(): void {
     if (!this.mediaElement) return;
 
-    this.mediaElement.video.style.filter = `brightness(${this.brightnessValue}%) contrast(${this.contrastValue}%)`;
+    this.mediaElement.video.style.filter =
+      `brightness(${this.brightnessValue}%) contrast(${this.contrastValue}%)`;
     this.mediaElement.brightnessValue = this.brightnessValue;
     this.mediaElement.contrastValue = this.contrastValue;
   }
@@ -168,7 +169,7 @@ export default class VideoController {
    * Рендерит видео-поток в canvas
    * Используется для вычисления уровня освещенности и определения движения
    */
-  drawVideo(): void {
+  public drawVideo(): void {
     if (!this.mediaElement) return;
 
     const { width, height } = this.videoCanvas;
@@ -179,7 +180,7 @@ export default class VideoController {
    * Рассчитывает уровень освещенности
    * по формуле https://www.w3.org/TR/AERT/#color-contrast
    */
-  calcIllumination(): void {
+  public calcIllumination(): void {
     const { width, height } = this.videoCanvas;
     const imageData = this.videoCanvasCtx.getImageData(0, 0, width, height);
     const { data } = imageData;
@@ -193,7 +194,7 @@ export default class VideoController {
     this.illuminationOutput.innerText = (Math.round(illumination * 10) / 10).toString();
   }
 
-  initAnalyser(): void {
+  public initAnalyser(): void {
     if (!this.mediaElement) return;
 
     const id = this.mediaElement.video.getAttribute('id') || '';
@@ -212,7 +213,7 @@ export default class VideoController {
   /**
    * Рисует громкость звука в виде столбчатой диаграммы
    */
-  audioVisualizing(): void {
+  public audioVisualizing(): void {
     const { width, height } = this.audioCanvas;
 
     this.analyser.getByteFrequencyData(this.dataArrayAlt);
