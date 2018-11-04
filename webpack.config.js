@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CheckerPlugin } = require('awesome-typescript-loader');
 const data = require('./events.json');
 
 module.exports = (env, argv) => {
@@ -8,13 +9,17 @@ module.exports = (env, argv) => {
 
   return ({
     entry: [
-      './src/js/index.js',
+      './src/js/index.ts',
       './src/styl/main.styl',
       './src/pug/index.pug',
       './src/pug/video-monitoring.pug',
     ],
     module: {
       rules: [
+        {
+          test: /\.tsx?$/,
+          loader: 'awesome-typescript-loader',
+        },
         {
           test: /\.js$/,
           use: {
@@ -84,6 +89,7 @@ module.exports = (env, argv) => {
       ],
     },
     plugins: [
+      new CheckerPlugin(),
       new MiniCssExtractPlugin({
         filename: '[name].css',
         chunkFilename: '[id].css',
@@ -96,6 +102,9 @@ module.exports = (env, argv) => {
         { from: 'src/images/', to: 'images' },
       ]),
     ],
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx']
+    },
     devServer: {
       open: true,
     },
