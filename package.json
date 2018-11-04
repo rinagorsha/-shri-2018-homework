@@ -50,6 +50,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "hls.js": "^0.11.0"
+    "hls.js": "^0.11.0",
+    "shri-2018-flux": "git+https://github.com/rinagorsha/shri-2018-flux.git"
   }
 }

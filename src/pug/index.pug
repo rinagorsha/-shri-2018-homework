@@ -1,11 +1,3 @@
 extends _layout
 
 block content
-  h1 Лента событий
-
-  .layout
-    for item in events
-      +panel(item)(class=[
-        'layout__item',
-        `layout__item_${item.size}`
-      ])
