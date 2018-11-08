@@ -6,4 +6,3 @@ ReactDOM.render(
   <App />,
   document.getElementById('root') as HTMLElement,
 );
-console.log('xxx');

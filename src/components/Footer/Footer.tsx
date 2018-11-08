@@ -3,11 +3,11 @@ import { cn } from '@bem-react/classname';
 import NavFooter from '../NavFooter/NavFooter';
 import './Footer.styl';
 
-const footerClass = cn('Footer');
+const cnFooter = cn('Footer');
 
 const Footer = () => (
-  <footer className={footerClass()}>
-    <NavFooter className={footerClass('Nav')} />
+  <footer className={cnFooter()}>
+    <NavFooter className={cnFooter('Nav')} />
     <div>© 2001-2018 ООО «Яндекс»</div>
   </footer>
 );

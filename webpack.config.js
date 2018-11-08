@@ -1,3 +1,4 @@
+const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -12,6 +13,7 @@ module.exports = (env, argv) => {
 
   return ({
     entry: [
+      './src/styles/common.styl',
       './src/index.tsx',
       './public/index.html',
     ],
@@ -57,6 +59,10 @@ module.exports = (env, argv) => {
             {
               loader: 'stylus-loader',
               options: {
+                import: [
+                  path.join(__dirname, 'src/styles/colors.styl'),
+                  path.join(__dirname, 'src/styles/vars.styl'),
+                ],
                 compress: isProduction,
                 sourceMap: !isProduction,
               },

@@ -4,15 +4,15 @@ import Logo from '../Logo/Logo';
 import NavHeader from '../NavHeader/NavHeader';
 import './Header.styl';
 
-const header = cn('Header');
+const cnHeader = cn('Header');
 
 const Header = () => (
-  <header className={header()}>
-    <Logo className={header('Logo')} />
-    <div className={header('Nav')}>
+  <header className={cnHeader()}>
+    <Logo className={cnHeader('Logo')} />
+    <div className={cnHeader('Nav')}>
       <NavHeader />
     </div>
-    <button className={header('Menu')} type="button"></button>
+    <button className={cnHeader('Menu')} type="button"></button>
   </header>
 );
 
