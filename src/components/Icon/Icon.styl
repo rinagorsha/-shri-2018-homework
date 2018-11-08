@@ -14,8 +14,8 @@ icons = stats key robot-cleaner router thermal ac music fridge battery cam kettl
     height @width
 
   for icon in icons
-    &_{icon}
-      background-image url('../images/icons/' + icon + '.svg')
+    &_type_{icon}
+      background-image url('./' + icon + '.svg')
 
-      &_active
-        background-image url('../images/icons/' + icon + '-white.svg')
+      &.icon_active
+        background-image url('./' + icon + '-white.svg')
