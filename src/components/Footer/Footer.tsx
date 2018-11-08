@@ -8,7 +8,7 @@ const cnFooter = cn('Footer');
 const Footer = () => (
   <footer className={cnFooter()}>
     <NavFooter className={cnFooter('Nav')} />
-    <div>© 2001-2018 ООО «Яндекс»</div>
+    <div>© 2001-{new Date().getFullYear()} ООО «Яндекс»</div>
   </footer>
 );
 
