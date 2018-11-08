@@ -2,6 +2,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader');
+const autoprefixer = require('autoprefixer');
+const postcssCssToBemCss = require('postcss-css-to-bem-css');
+
 const data = require('./events.json');
 
 module.exports = (env, argv) => {
@@ -9,11 +12,8 @@ module.exports = (env, argv) => {
 
   return ({
     entry: [
-      './src/js/index.ts',
-      './src/styl/main.styl',
-      './src/pug/index.pug',
-      './src/pug/events.pug',
-      './src/pug/video-monitoring.pug',
+      './src/index.tsx',
+      './public/index.html',
     ],
     module: {
       rules: [
@@ -43,6 +43,15 @@ module.exports = (env, argv) => {
               loader: 'postcss-loader',
               options: {
                 sourceMap: !isProduction,
+                plugins: [
+                  autoprefixer({
+                    browsers: ['ie >= 11', 'last 4 version'],
+                  }),
+                  postcssCssToBemCss({
+                    sourceNaming: 'origin',
+                    targetNaming: 'react',
+                  }),
+                ],
               },
             },
             {
@@ -55,21 +64,13 @@ module.exports = (env, argv) => {
           ],
         },
         {
-          test: /\.pug$/,
+          test: /\.html$/,
           exclude: /node_modules/,
           use: [
             {
               loader: 'file-loader',
               options: {
-                name: '[path][name].html',
-                context: 'src/pug/',
-              },
-            },
-            {
-              loader: 'pug-html-loader',
-              options: {
-                pretty: true,
-                data,
+                name: '[name].html',
               },
             },
           ],
@@ -99,9 +100,6 @@ module.exports = (env, argv) => {
         verbose: true,
         dry: false,
       }),
-      new CopyWebpackPlugin([
-        { from: 'src/images/', to: 'images' },
-      ]),
     ],
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx'],

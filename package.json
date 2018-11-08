@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "description": "Домашние задания для Школы разработки интерфейсов - 2018 II",
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject",
+    "start": "webpack-dev-server --mode development",
     "compile": "webpack --mode production",
     "server": "ts-node ./server/index",
     "lint": "npm run lint-tslint & npm run lint-stylelint",
@@ -29,6 +26,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.4",
     "babel-preset-env": "^1.7.0",
+    "bem-tools-create": "^2.3.0",
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
@@ -39,6 +37,7 @@
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.3",
     "nodemon": "^1.18.4",
+    "postcss-css-to-bem-css": "^1.1.0",
     "postcss-loader": "^3.0.0",
     "pug-html-loader": "^1.1.5",
     "stylus": "^0.54.5",
@@ -46,9 +45,9 @@
     "stylus-supremacy": "^2.12.7",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.0",
     "tslint-config-airbnb-base": "^0.2.0",
     "typescript": "^3.1.6",
-    "tslint-config-airbnb": "^5.11.0",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.9"
@@ -62,7 +61,7 @@
     "hls.js": "^0.11.0",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
-    "react-scripts-ts": "3.1.0",
+    "react-scripts-ts": "^4.0.8",
     "shri-2018-flux": "git+https://github.com/rinagorsha/shri-2018-flux.git"
   }
 }
