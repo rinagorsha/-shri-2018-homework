@@ -1,11 +1,20 @@
 {
   "defaultSeverity": "error",
-  "extends": "tslint-config-airbnb-base",
+  "extends": ["tslint-react", "tslint-config-airbnb"],
+  "linterOptions": {
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts",
+      "coverage/lcov-report/*.js"
+    ]
+  },
   "jsRules": {},
   "rules": {
     "max-line-length": [true, 150],
+    "no-console": [true, "log"],
+    "ordered-imports": [false],
+    "object-literal-sort-keys": [false],
     "no-magic-numbers": false,
-    "no-console": [true, "log"]
-  },
-  "rulesDirectory": []
+    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"]
+  }
 }
