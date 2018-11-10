@@ -1,0 +1,36 @@
+.panel
+  &__header
+    width 100%
+    box-sizing border-box
+    border-radius 20px
+    padding 22px 20px
+
+    @media $mobile
+      padding 16px
+
+    .panel_type_critical &
+      color #fff
+  
+  &__header-title
+    margin-bottom 20px
+    display flex
+    align-items center
+
+    @media $mobile
+      font-size 1.56rem
+      margin-bottom 16px
+
+  &__header-name
+    overflow hidden
+    font-size 2.4rem
+    font-weight 700
+    margin-top 0
+    margin-bottom 0
+    flex 0 1 auto
+
+  &__header-icon
+    margin-right 20px
+    flex 0 0 auto
+
+    @media $mobile
+      margin-right 16px

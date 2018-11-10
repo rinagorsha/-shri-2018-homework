@@ -2,6 +2,7 @@ import * as React from 'react';
 import { cn } from '@bem-react/classname';
 import {IeventItemType} from '../../../server/types';
 import PanelHeader from './Header/Panel-Header';
+import PanelBody from './Body/Panel-Body';
 import PanelAction from './Action/Panel-Action';
 import './Panel.styl';
 
@@ -22,6 +23,10 @@ const Panel = ({ item, className }: PanelType) => (
     [className],
   )}>
     <PanelHeader item={item} />
+
+    {(item.description || item.data) && (
+      <PanelBody item={item} />
+    )}
 
     <PanelAction
       type="arrow"
