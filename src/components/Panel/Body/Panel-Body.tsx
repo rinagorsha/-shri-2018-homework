@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { cn } from '@bem-react/classname';
+import Info from '../../Info/Info';
+import Camera from '../../Camera/Camera';
 import Player from '../../Player/Player';
 import {IeventItemType} from '../../../../server/types';
 import './Panel-Body.styl';
@@ -31,6 +33,23 @@ const PanelBody = ({ item, className }: PanelBodyType) => (
           volume={item.data.volume}
           className={cnPanel('Player')}
         />
+      </div>
+    )}
+
+    {item.data && (item.data.humidity || item.data.temperature) && (
+      <div className={cnPanel('Line')}>
+        <Info
+          size={item.size}
+          data={[
+            `Температура: ${item.data.temperature} C`,
+            `Влажность: ${item.data.humidity} %`,
+          ]} />
+      </div>
+    )}
+
+    {item.data && item.data.image && (
+      <div className={cnPanel('Line')}>
+        <Camera />
       </div>
     )}
   </div>
