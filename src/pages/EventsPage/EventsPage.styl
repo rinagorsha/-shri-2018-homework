@@ -7,3 +7,30 @@
     @media $mobile
       grid-gap 15px
       grid-template-columns 1fr
+
+  &__item
+    &_size_s
+      grid-column span 2
+
+      @media $tablet
+        grid-column span 3
+
+      @media $mobile
+        grid-column span 1
+
+    &_size_m
+      grid-column span 3
+
+      @media $mobile
+        grid-column span 1
+
+    &_size_l
+      grid-column span 4
+      grid-row span 3
+
+      @media $tablet
+        grid-column span 6
+        grid-row auto
+
+      @media $mobile
+        grid-column span 1

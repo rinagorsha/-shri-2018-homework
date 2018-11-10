@@ -16,29 +16,30 @@
       background-color $grayDark
       box-shadow 0 2px 6px alpha(#c5baba, .5)
 
-  &_critical
+  &_type_critical
     background-color $red
 
-    &.panel_has-content
+    &.panel_hasContent
       border-bottom-right-radius 30px
       border-bottom-left-radius 30px
 
     &:hover
       background-color $red
 
-  &_l
+  &_size_l
     @media $more-tablet
       font-size 2.4rem
 
   &__header
     width 100%
+    box-sizing border-box
     border-radius 20px
     padding 22px 20px
 
     @media $mobile
       padding 16px
 
-    .panel_critical &
+    .panel_type_critical &
       color #fff
 
   &__content
@@ -59,7 +60,7 @@
       padding 16px
       padding-top 0
 
-    .panel_critical &
+    .panel_type_critical &
       padding-top 20px
 
       @media $mobile
@@ -119,83 +120,3 @@
     border-radius 20px
     vertical-align middle
 
-  &__action
-    box-shadow-params = 0 0 5px 5px
-    width 25px
-    height @width
-    background-color $grayDark
-    background-position 50%
-    background-repeat no-repeat
-    border-radius 50%
-    opacity 0
-    visibility hidden
-    position absolute
-    right 15px
-    cursor pointer
-    transition all .3s ease
-
-    body.is-touch-device &
-      display none
-
-    @media $mobie
-      display none
-
-    &_arrow
-      background-image url('../images/next.svg')
-      box-shadow box-shadow-params $grayDark
-      bottom 15px
-
-      @media $tablet
-        bottom 6px
-
-      &-critical
-        background-color $red
-        background-image url('../images/next-white.svg')
-        box-shadow box-shadow-params $red
-
-    &_close
-      background-image url('../images/cross.svg')
-      box-shadow box-shadow-params $grayDark
-      top 15px
-
-      @media $tablet
-        top 6px
-
-      &-critical
-        background-color $red
-        background-image url('../images/cross-white.svg')
-        box-shadow box-shadow-params $red
-
-    .panel:hover &
-      opacity 1
-      visibility visible
-
-.panel-info
-  font-size 1.33rem
-  display flex
-  flex-wrap wrap
-  justify-content space-between
-  align-items center
-
-  @media $mobile
-    font-size 1.33rem
-
-  &_s
-    @media $more-tablet
-      display block
-
-  &_temperature
-    @media $mobile
-      font-size 1.56rem
-
-  &__item
-    margin-right 10px
-
-    .panel-info_s &
-      @media $more-tablet
-        margin-bottom 20px
-        margin-right 0
-
-    &:last-child
-      margin-bottom 0
-      margin-right 0

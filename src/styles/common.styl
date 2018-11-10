@@ -21,6 +21,13 @@
   -webkit-text-stroke 1px transparent // mac fix
   -webkit-text-size-adjust 100% // stop iphone resize when orientation landscape
   margin 0
+  display grid
+  grid-template-rows 1fr auto
+  grid-template-columns 100%
+  transition background .3s
+
+  &_opened-video
+    background-color $textColor
 
 .root
   min-height 100vh
