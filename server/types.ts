@@ -8,7 +8,19 @@ export interface IeventItemType {
   size: 's' | 'm' | 'l';
   data?: {
     type?: string,
-  };
+    values?: [],
+    humidity?: string,
+    temperature?: string,
+    albumcover?: string,
+    artist?: string,
+    track?: {
+      name: string,
+      length: string,
+    },
+    volume?: number,
+    buttons?: string[],
+    image?: string,
+  }
 }
 
 export interface IeventsJsonType {

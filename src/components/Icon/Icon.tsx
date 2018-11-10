@@ -11,10 +11,13 @@ type IconType = {
 }
 
 const Icon = ({ icon, active, className }: IconType) => (
-  <div className={cnIcon({
-    type: icon,
-    active: active,
-  })} />
+  <div className={cnIcon(
+    {
+      type: icon,
+      active: active,
+    },
+    [className]
+  )} />
 );
 
 export default Icon;
