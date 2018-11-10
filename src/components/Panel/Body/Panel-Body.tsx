@@ -3,6 +3,7 @@ import { cn } from '@bem-react/classname';
 import Info from '../../Info/Info';
 import Camera from '../../Camera/Camera';
 import Player from '../../Player/Player';
+import Button from '../../Button/Button';
 import {IeventItemType} from '../../../../server/types';
 import './Panel-Body.styl';
 
@@ -50,6 +51,28 @@ const PanelBody = ({ item, className }: PanelBodyType) => (
     {item.data && item.data.image && (
       <div className={cnPanel('Line')}>
         <Camera />
+      </div>
+    )}
+
+    {item.data && item.data.type == 'graph' && (
+      <div className={cnPanel('Line')}>
+        <img className={cnPanel('Image')} src="public/graph.jpg" alt={item.title} />
+      </div>
+    )}
+
+    {item.data && item.data.buttons && (
+      <div className={cnPanel('Line')}>
+        <div className={cnPanel('Buttons')}>
+          {item.data.buttons.map(btn => (
+            <Button
+              key={btn}
+              color={btn === 'Нет' ? 'gray' : ''}
+              className={cnPanel('Button')}
+            >
+              {btn}
+            </Button>
+          ))}
+        </div>
       </div>
     )}
   </div>

@@ -3,14 +3,15 @@ import { cn } from '@bem-react/classname';
 import './Button.styl';
 
 type ButtonType = {
-  color?: 'gray',
+  color?: string,
   children: React.ReactNode,
+  className?: string,
 };
 
 const cnButton = cn('Button');
 
-const Button = ({ color, children }: ButtonType) => (
-  <button className={cnButton(null, {color})}>
+const Button = ({ color, children, className }: ButtonType) => (
+  <button className={cnButton(null, {color}, [className])}>
     {children}
   </button>
 );
