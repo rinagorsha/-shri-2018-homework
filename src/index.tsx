@@ -4,7 +4,15 @@ import AppDesktop from './App/App@desktop';
 import AppTouch from './App/App@touch';
 import './store/eventsStore';
 import './store/locationStore';
-import './types';
+
+// tslint:disable-next-line
+declare global {
+  // tslint:disable-next-line
+  interface Window {
+    AudioContext: typeof AudioContext;
+    webkitAudioContext: typeof AudioContext;
+  }
+}
 
 let isTouchDevice: boolean = false;
 

@@ -22,14 +22,14 @@ const MAX_SCALE = 2;
 
 class Camera extends React.Component<null, CameraState> {
   gesture: IGesture | null = null;
-  evCache: PointerEvent[] = [];
+  evCache: React.PointerEvent[] = [];
   image: HTMLElement | null;
   camera: HTMLElement | null;
   prevScaleDiff: number  = -1;
 
   state = {
     currentScale: 1,
-    backgroundPosition: '50% 50%',
+    backgroundPosition: '0 0',
     diffAtan: 1,
   }
 
@@ -67,7 +67,7 @@ class Camera extends React.Component<null, CameraState> {
     );
   }
 
-  setPointerCapture = (event: PointerEvent) => {
+  setPointerCapture = (event: React.PointerEvent) => {
     if (!this.camera || !this.image) return;
 
     this.camera.setPointerCapture(event.pointerId);
@@ -81,7 +81,7 @@ class Camera extends React.Component<null, CameraState> {
     };
   }
 
-  changeCamera = (event: PointerEvent) => {
+  changeCamera = (event: React.PointerEvent) => {
     if (!this.gesture) {
       return;
     }
@@ -98,8 +98,8 @@ class Camera extends React.Component<null, CameraState> {
 
     if (this.evCache.length === 2) {
       // brightness
-      const dx = Math.abs(this.evCache[0].x - this.evCache[1].x);
-      const dy = Math.abs(this.evCache[0].y - this.evCache[1].y);
+      const dx = Math.abs(this.evCache[0].screenX - this.evCache[1].screenX);
+      const dy = Math.abs(this.evCache[0].screenY - this.evCache[1].screenY);
       const diffAtan = Math.atan2(dy, dx);
       this.setState({
         diffAtan,

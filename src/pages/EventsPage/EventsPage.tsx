@@ -22,10 +22,12 @@ const EventsPage = () => (
             const cnPanel = cn('Panel');
             const registry = registries[cnApp()];
             const Panel: React.ComponentType<PanelType> = registry.get(cnPanel())
-            return <Panel
-              item={event}
-              className={cnEventsPage('Item', {size: event.size})}
-            />
+            return (
+              <Panel
+                item={event}
+                className={cnEventsPage('Item', {size: event.size})}
+              />
+            )
           }}
         </RegistryConsumer>
       ))}
