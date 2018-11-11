@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cn } from '@bem-react/classname';
+import { RegistryConsumer } from '@bem-react/di'
 import Info from '../../Info/Info';
-import Camera from '../../Camera/Camera';
 import Player from '../../Player/Player';
 import Button from '../../Button/Button';
 import {IeventItemType} from '../../../../server/types';
@@ -50,7 +50,15 @@ const PanelBody = ({ item, className }: PanelBodyType) => (
 
     {item.data && item.data.image && (
       <div className={cnPanel('Line')}>
-        <Camera />
+        <RegistryConsumer>
+          {registries => {
+            const cnApp = cn('App');
+            const cnCamera = cn('Camera');
+            const registry = registries[cnApp()];
+            const Camera = registry.get(cnCamera())
+            return <Camera />
+          }}
+        </RegistryConsumer>
       </div>
     )}
 

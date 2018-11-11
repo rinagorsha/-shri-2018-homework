@@ -1,10 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import App from './App/App';
+import AppDesktop from './App/App@desktop';
+import AppTouch from './App/App@touch';
 import './store/eventsStore';
 import './store/locationStore';
 
+let isTouchDevice: boolean = false;
+
+if (('ontouchstart' in window) || navigator.msMaxTouchPoints) {
+  isTouchDevice = true;
+}
+
 ReactDOM.render(
-  <App />,
+  isTouchDevice ? <AppTouch /> : <AppDesktop />,
   document.getElementById('root') as HTMLElement,
 );

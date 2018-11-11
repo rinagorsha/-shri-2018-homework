@@ -23,7 +23,7 @@ const Player = ({ albumcover, artist, track, volume, className }: PlayerType) =>
       style={{backgroundImage: `url(${albumcover})`}}
     />
     <div className={cnPlayer('Info')}>
-      <label className={cnPlayer('Name')} for="track">
+      <label className={cnPlayer('Name')} htmlFor="track">
         {artist} - {name}
       </label>
       <div className={cnPlayer('Duration')}>

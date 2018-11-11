@@ -10,8 +10,6 @@ const App = () => (
     <Main>
       <EventsPage />
     </Main>
-    {/* <EventsPage />
-    <VideoPage /> */}
     <Footer />
   </React.Fragment>
 );
