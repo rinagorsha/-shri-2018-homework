@@ -6,8 +6,6 @@ const { CheckerPlugin } = require('awesome-typescript-loader');
 const autoprefixer = require('autoprefixer');
 const postcssCssToBemCss = require('postcss-css-to-bem-css');
 
-const data = require('./events.json');
-
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
 

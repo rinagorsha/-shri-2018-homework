@@ -3,7 +3,7 @@ import { cn } from '@bem-react/classname';
 import { RegistryConsumer } from '@bem-react/di'
 import Info from '../../Info/Info';
 import Player from '../../Player/Player';
-import Button from '../../Button/Button';
+import Button from '../../Button';
 import {IeventItemType} from '../../../../server/types';
 import './Panel-Body.styl';
 
@@ -74,7 +74,7 @@ const PanelBody = ({ item, className }: PanelBodyType) => (
           {item.data.buttons.map(btn => (
             <Button
               key={btn}
-              color={btn === 'Нет' ? 'gray' : ''}
+              color={btn === 'Да' ? 'yellow' : 'gray'}
               className={cnPanel('Button')}
             >
               {btn}

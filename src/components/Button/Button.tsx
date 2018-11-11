@@ -1,17 +1,9 @@
 import * as React from 'react';
-import { cn } from '@bem-react/classname';
+import { ButtonType } from './index';
 import './Button.styl';
 
-type ButtonType = {
-  color?: string,
-  children: React.ReactNode,
-  className?: string,
-};
-
-const cnButton = cn('Button');
-
-const Button = ({ color, children, className }: ButtonType) => (
-  <button className={cnButton(null, {color}, [className])}>
+const Button: React.SFC<ButtonType> = ({ children, className }) => (
+  <button className={className}>
     {children}
   </button>
 );
