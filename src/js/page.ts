@@ -1,42 +1,7 @@
-import initCameraController from './cameraController';
 import VideoController from './videoController';
 import VideoMonitor from './videoMonitor';
 
 export default function initPage() {
-  /**
-   * Обрезает заголовки
-   */
-  (() => {
-    const titles: NodeListOf<HTMLElement> = document.querySelectorAll('.js-truncate');
-    if (!titles.length) return;
-
-    truncate();
-    window.addEventListener('resize', truncate);
-
-    function truncate() {
-      // tslint:disable-next-line
-      for (let i = 0; i < titles.length; i++) {
-        const item: HTMLElement = titles[i];
-        const lineHeight: string = getComputedStyle(item).lineHeight || '1';
-
-        const maxHeight: number = parseInt(lineHeight, 10) * 2.5;
-        const text: string = item.getAttribute('title') || '';
-        const textArr: string[] = text.split(' ');
-        item.textContent = text;
-
-        while (item.offsetHeight > maxHeight) {
-          textArr.pop();
-          item.textContent = textArr.join(' ') + '...';
-        }
-      }
-    }
-  })();
-
-  /**
-   * Работа камеры
-   */
-  initCameraController();
-
   /**
    * Видеонаблюдение
    */

@@ -20,7 +20,7 @@ export interface IeventItemType {
     volume?: number,
     buttons?: string[],
     image?: string,
-  }
+  };
 }
 
 export interface IeventsJsonType {

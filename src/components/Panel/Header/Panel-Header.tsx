@@ -8,30 +8,66 @@ import './Panel-Header.styl';
 
 const cnPanel = cn('Panel');
 
-type PanelHeaderType = {
+type PanelHeaderProps = {
   item: IeventItemType,
 }
 
-const PanelHeader = ({ item }: PanelHeaderType) => {
-  return (
-    <header className={cnPanel('Header')}>
-      <div className={cnPanel('HeaderTitle')}>
-        <Icon
-          icon={item.icon}
-          active={item.type === 'critical'}
-          className={cnPanel('HeaderIcon')}
+class PanelHeader extends React.PureComponent<PanelHeaderProps> {
+  titleEL: HTMLSpanElement | null;
+
+  componentDidMount() {
+    this.truncateTitle();
+
+    window.addEventListener('resize', this.truncateTitle)
+  }
+
+  render() {
+    const { item } = this.props;
+    return (
+      <header className={cnPanel('Header')}>
+        <div className={cnPanel('HeaderTitle')}>
+          <Icon
+            icon={item.icon}
+            active={item.type === 'critical'}
+            className={cnPanel('HeaderIcon')}
+          />
+          <Title
+            size={2}
+            className={cnPanel('HeaderName')}
+            title={item.title}
+            
+          >
+            <span ref={(item) => this.titleEL = item}>
+              {item.title}
+            </span>
+          </Title>
+        </div>
+        <Info
+          data={[item.source, item.time]}
+          size={item.size}
+          className={cnPanel('HeaderInfo')}
         />
-        <Title
-          size={2}
-          className={cnPanel('HeaderName')}
-          title={item.title}
-        >
-          {item.title}
-        </Title>
-      </div>
-      <Info data={[item.source, item.time]} size={item.size} />
-    </header>
-  );
+      </header>
+    );
+  }
+
+  truncateTitle = () => {
+    if (!this.titleEL) return;
+
+    const { title } = this.props.item;
+    const lineHeight: string = getComputedStyle(this.titleEL).lineHeight || '1';
+    const maxHeight: number = parseInt(lineHeight, 10) * 2.5;
+
+    const textArr: string[] = title.split(' ');
+    this.titleEL.textContent = title;
+
+    while (this.titleEL.offsetHeight > maxHeight) {
+      textArr.pop();
+      this.titleEL.textContent = textArr.join(' ') + '...';
+    }
+
+    return title;
+  }
 }
 
 export default PanelHeader;

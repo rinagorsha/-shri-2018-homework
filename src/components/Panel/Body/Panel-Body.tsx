@@ -71,7 +71,7 @@ const PanelBody = ({ item, className }: PanelBodyType) => (
     {item.data && item.data.buttons && (
       <div className={cnPanel('Line')}>
         <div className={cnPanel('Buttons')}>
-          {item.data.buttons.map(btn => (
+          {item.data.buttons.map((btn: string) => (
             <Button
               key={btn}
               color={btn === 'Да' ? 'yellow' : 'gray'}

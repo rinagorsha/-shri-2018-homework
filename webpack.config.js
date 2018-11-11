@@ -104,6 +104,11 @@ module.exports = (env, argv) => {
         verbose: true,
         dry: false,
       }),
+      new CopyWebpackPlugin([
+        'public/*.png',
+        'public/*.jpg',
+        'public/*.json',
+      ]),
     ],
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx'],

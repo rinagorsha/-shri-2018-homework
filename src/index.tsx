@@ -4,6 +4,7 @@ import AppDesktop from './App/App@desktop';
 import AppTouch from './App/App@touch';
 import './store/eventsStore';
 import './store/locationStore';
+import './types';
 
 let isTouchDevice: boolean = false;
 
