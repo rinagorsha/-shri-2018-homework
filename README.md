@@ -139,7 +139,7 @@ $ npm run server
 3. По завершении проверки домашнего задания я продолжу работать с TypeScript и волью PR в основную ветку.
 Мне понравилось работать с TypeScript: он позволяет избежать ошибок и помогает держать код в чистоте.
 
-## Комментарии к ДЗ #8 Архитектура
+## Комментарии к ДЗ #8 «Архитектура»
 - [x] Написан фреймворк [shri-2018-flux](https://github.com/rinagorsha/shri-2018-flux), реализующий Flux-подход
 - [x] Описан API фреймворка
 - [x] Фреймворк подключен в проект, на нем реализовано переключение вкладок "События"-"Видеонаблюдение"
@@ -178,6 +178,15 @@ const store = new Store(initialState, reducer, dispatcher);
 dispatcher.dispatch(actionEvent);
 ```
 
+## Комментарии к ДЗ #9 «БЭМ»
+- [x] Страница с эвентами переверстана на React
+- [x] Все css-классы строятся с помощью `@bem-react/classname`
+- [x] Цвета кнопки [Button](https://github.com/rinagorsha/shri-2018-homework/blob/homework9/src/components/Button/index.tsx) задаются с помощью `@bem-react/core`
+- [x] Компонент [Camera](https://github.com/rinagorsha/shri-2018-homework/blob/homework9/src/components/Panel/Body/Panel-Body.tsx#L53) по-разному рендерится для десктопной и тачевой версий с помощью `@bem-react/di`
+- [x] Использован [postcss-css-to-bem-css](https://github.com/rinagorsha/shri-2018-homework/blob/homework9/webpack.config.js#L49) для перевода из нотации `block__element_modifier` в `Block-ElementName_modifier`
+
+
+
 
 ## Задания
 
@@ -202,5 +211,8 @@ dispatcher.dispatch(actionEvent);
 ## ДЗ #7 «Типизиция»
 Перевести весь проект на TypeScript
 
-## ДЗ #8 Архитектура
+## ДЗ #8 «Архитектура»
 Реализовать фреймворк на Flux-подходе и подключить его к проекту
+
+## ДЗ #9 «БЭМ»
+Необходимо переверстать интерфейс проекта Умный дом на React с использованием пакетов classname, core и di библиотеки bem-react. Достаточно сверстать одну любую страницу, но необходимо осмысленно применить все три пакета.
