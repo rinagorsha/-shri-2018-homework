@@ -7,10 +7,9 @@ const cnPanel = cn('Panel');
 type PanelActionType = {
   type: 'arrow' | 'close',
   white: boolean,
-  className?: string,
 }
 
-const PanelAction = ({ white, type, className }: PanelActionType) => (
+const PanelAction = ({ white, type }: PanelActionType) => (
   <button
     type="button"
     title="Раскрыть событие"

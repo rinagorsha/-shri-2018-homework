@@ -12,6 +12,7 @@
     height 420px
     background-image url('./image3x.jpg')
     background-size cover
+    background-repeat no-repeat
 
     @media $tablet
       background-image url('./image2x.jpg')
@@ -20,9 +21,8 @@
       height 350px
       background-image url('./image.jpg')
 
-    body:not(.is-touch-device) &
-      background-size cover
-      background-repeat no-repeat
+    &_touch
+      background-repeat repeat
 
   &__info
     margin-top 20px

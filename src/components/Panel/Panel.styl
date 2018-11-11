@@ -11,10 +11,9 @@
   align-items stretch
   transition all .3s ease
 
-  &:hover
-    @media $more-mobile
-      background-color $grayDark
-      box-shadow 0 2px 6px alpha(#c5baba, .5)
+  &_withHover:hover
+    background-color $grayDark
+    box-shadow 0 2px 6px alpha(#c5baba, .5)
 
   &_type_critical
     background-color $red

@@ -47,7 +47,7 @@ class Camera extends React.Component<null, CameraState> {
       >
         <div className={cnCamera('Container')}>
           <div
-            className={cnCamera('Image')}
+            className={cnCamera('Image', {touch: true})}
             ref={(el) => this.image = el}
             style={{
               backgroundPosition,
@@ -90,7 +90,6 @@ class Camera extends React.Component<null, CameraState> {
     if (this.evCache.length === 1) {
       const dx = this.gesture.startX - event.screenX;
       const dy = this.gesture.startY - event.screenY;
-      console.log('--- changeCamera', dx, dy);
 
       this.setState({
         backgroundPosition: `${-dx}px ${-dy}px`,
@@ -131,7 +130,6 @@ class Camera extends React.Component<null, CameraState> {
   }
 
   resetGesture = (): void => {
-    console.log('--- resetGesture');
     if (!this.gesture) {
       return;
     }

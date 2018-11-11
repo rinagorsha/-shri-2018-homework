@@ -24,7 +24,7 @@ class PanelHeader extends React.PureComponent<PanelHeaderProps> {
   render() {
     const { item } = this.props;
     return (
-      <header className={cnPanel('Header')}>
+      <header className={cnPanel('Header', {tall: !item.description && !item.data})}>
         <div className={cnPanel('HeaderTitle')}>
           <Icon
             icon={item.icon}
