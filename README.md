@@ -139,6 +139,46 @@ $ npm run server
 3. По завершении проверки домашнего задания я продолжу работать с TypeScript и волью PR в основную ветку.
 Мне понравилось работать с TypeScript: он позволяет избежать ошибок и помогает держать код в чистоте.
 
+## Комментарии к ДЗ #8 Архитектура
+- [x] Написан фреймворк [shri-2018-flux](https://github.com/rinagorsha/shri-2018-flux), реализующий Flux-подход
+- [x] Описан API фреймворка
+- [x] Фреймворк подключен в проект, на нем реализовано переключение вкладок "События"-"Видеонаблюдение"
+- [x] Организовано хранение store в local storage
+- [x] Фреймворк покрыт тестами [shri-2018-flux/test](https://github.com/rinagorsha/shri-2018-flux/tree/master/test)
+
+#### API
+Сингтон `Dispatcher` представляет собой Dispatcher из flux-архитектуры. 
+  * Метод `register` регистрирует callback stor'а.
+  * Метод `unregister` удаляет callback из списка * зарегистрированных callback'ов.
+  * Метод `dispatch` вызывает все зарегистрированные callback'и и передает в каждый из них action.
+
+Класс `Store` представляет собой Store из flux-архитектуры.
+  * Конструктор принимает
+    * начальное состояние `initialState`
+    * функцию `reducer`, описывающую изменения state в зависимости от получаемого action
+    * dispatcher
+  * Метод getState возвращает текущее состояние стора (`state`)
+  * Метод `addListener` добавляет слушателей изменения стора
+
+
+#### Пример использования
+```javascript
+import dispatcher from 'shri-2018-flux';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'EXAMPLE': {
+      return { ...state, ...action.data };
+    }
+  }
+};
+
+const store = new Store(initialState, reducer, dispatcher);
+
+dispatcher.dispatch(actionEvent);
+```
+
+
 ## Задания
 
 ### ДЗ #1 «Адаптивная вёрстка»
@@ -161,3 +201,6 @@ $ npm run server
 
 ## ДЗ #7 «Типизиция»
 Перевести весь проект на TypeScript
+
+## ДЗ #8 Архитектура
+Реализовать фреймворк на Flux-подходе и подключить его к проекту

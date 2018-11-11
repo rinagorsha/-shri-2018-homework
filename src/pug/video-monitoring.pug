@@ -1,36 +1,33 @@
-extends _layout
-
 mixin video(id, src)
   .video-monitoring__container
     .video-monitoring__element.js-monitoring-element
       video.video-monitoring__video.js-monitoring-video(id=id, src=src, muted)
 
 
-block content
-  .video-popup#video-monitoring-container
-    button.video-close.js-monitoring-close#video-monitoring-close(type="button", title="Все камеры")
-      | Все камеры
-    .video-monitoring
-      +video('video1', 'blob:http://127.0.0.1:3102/82c7bcbc-8f76-4104-8a2e-b98dea54784a')
-      +video('video2', 'blob:http://127.0.0.1:3102/bf6d6d81-640f-476c-aee3-6af0cf81d7db')
-      +video('video3', 'blob:http://127.0.0.1:3102/1c94c093-81e0-4225-a2ed-31ce95925a20')
-      +video('video4', 'blob:http://127.0.0.1:3102/2d7e03ef-38e4-4d98-a374-decfdf930918')
+.video-popup#video-monitoring-container
+  button.video-close.js-monitoring-close#video-monitoring-close(type="button", title="Все камеры")
+    | Все камеры
+  .video-monitoring
+    +video('video1', 'blob:http://127.0.0.1:3102/82c7bcbc-8f76-4104-8a2e-b98dea54784a')
+    +video('video2', 'blob:http://127.0.0.1:3102/bf6d6d81-640f-476c-aee3-6af0cf81d7db')
+    +video('video3', 'blob:http://127.0.0.1:3102/1c94c093-81e0-4225-a2ed-31ce95925a20')
+    +video('video4', 'blob:http://127.0.0.1:3102/2d7e03ef-38e4-4d98-a374-decfdf930918')
 
-    .video-controls#video-monitoring-popup
-      .video-controls__item
-        .video-controls__caption Яркость
-        input.video-controls__input#video-input-brightness(name="brightness", type="range", min="0", max="300", step="1")
-        | Уровень освещенности
-        |  
-        b
-          span#video-monitoring-illumination
-          | %
-      .video-controls__item
-        .video-controls__caption Контрастность
-        input.video-controls__input#video-input-contrast(name="contrast", type="range", min="0", max="500", step="1")
-      .video-controls__item
-        .video-controls__caption Громкость
-        canvas.video-controls__volume#video-monitoring-audio
-      .video-controls__canvases
-        canvas.video-controls__video-canvas#video-monitoring-video
-        canvas.video-controls__motion#video-monitoring-motion
+  .video-controls#video-monitoring-popup
+    .video-controls__item
+      .video-controls__caption Яркость
+      input.video-controls__input#video-input-brightness(name="brightness", type="range", min="0", max="300", step="1")
+      | Уровень освещенности
+      |  
+      b
+        span#video-monitoring-illumination
+        | %
+    .video-controls__item
+      .video-controls__caption Контрастность
+      input.video-controls__input#video-input-contrast(name="contrast", type="range", min="0", max="500", step="1")
+    .video-controls__item
+      .video-controls__caption Громкость
+      canvas.video-controls__volume#video-monitoring-audio
+    .video-controls__canvases
+      canvas.video-controls__video-canvas#video-monitoring-video
+      canvas.video-controls__motion#video-monitoring-motion

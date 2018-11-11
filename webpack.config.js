@@ -12,6 +12,7 @@ module.exports = (env, argv) => {
       './src/js/index.ts',
       './src/styl/main.styl',
       './src/pug/index.pug',
+      './src/pug/events.pug',
       './src/pug/video-monitoring.pug',
     ],
     module: {
@@ -103,7 +104,7 @@ module.exports = (env, argv) => {
       ]),
     ],
     resolve: {
-      extensions: ['.ts', '.tsx', '.js', '.jsx']
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
     },
     devServer: {
       open: true,

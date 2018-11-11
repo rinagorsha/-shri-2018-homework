@@ -1,5 +1,3 @@
-include _panel
-
 doctype html
 html(lang="ru")
   head
@@ -16,14 +14,14 @@ html(lang="ru")
         a.logo(href="index.html") Яндекс Дом
       .header__nav
         nav.nav-header
-          a.nav-header__item.nav-header__item_active(href="#") События
+          a.nav-header__item.js-link(href="events.html", data-url="events") События
           a.nav-header__item(href="#") Сводка
           a.nav-header__item(href="#") Устройства
           a.nav-header__item(href="#") Сценарии
-          a.nav-header__item(href="video-monitoring.html") Видеонаблюдение
+          a.nav-header__item.js-link(href="video-monitoring.html", data-url="video-monitoring") Видеонаблюдение
       button.header__menu.js-menu-button(type="button")
 
-    main.main
+    main.main#main
       block content
 
     footer.footer
