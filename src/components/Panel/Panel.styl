@@ -1,0 +1,40 @@
+.panel
+  background-color $gray
+  border-radius 20px
+  position relative
+  display flex
+  display flex
+  flex 0 0 auto
+  flex-direction column
+  flex-direction column
+  align-items flex-start
+  align-items stretch
+  transition all .3s ease
+
+  &_withHover:hover
+    background-color $grayDark
+    box-shadow 0 2px 6px alpha(#c5baba, .5)
+
+  &_type_critical
+    background-color $red
+
+    &.panel_hasContent
+      border-bottom-right-radius 30px
+      border-bottom-left-radius 30px
+
+    &:hover
+      background-color $red
+
+  &_size_l
+    @media $more-tablet
+      font-size 2.4rem
+
+  &__line
+    margin-bottom 20px
+
+    @media $mobile
+      margin-bottom 16px
+
+    &:last-child
+      margin-top auto
+      margin-bottom 0

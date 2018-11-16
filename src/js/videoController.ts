@@ -133,9 +133,9 @@ export default class VideoController {
 
     this.motionDetector.init(mediaElement.video.offsetWidth, mediaElement.video.offsetHeight);
 
-    this.intervalID = setInterval(() => this.calcIllumination(), this.TICK);
-    this.videoIntervalID = setInterval(() => this.drawVideo(), this.TICK);
-    this.motionIntervalID = setInterval(() => this.motionDetector.update(), this.TICK);
+    this.intervalID = window.setInterval(() => this.calcIllumination(), this.TICK);
+    this.videoIntervalID = window.setInterval(() => this.drawVideo(), this.TICK);
+    this.motionIntervalID = window.setInterval(() => this.motionDetector.update(), this.TICK);
     this.initAnalyser();
   }
 
@@ -207,7 +207,7 @@ export default class VideoController {
     this.bufferLengthAlt = this.analyser.frequencyBinCount;
     this.dataArrayAlt = new Uint8Array(this.bufferLengthAlt);
 
-    this.audioIntervalID = setInterval(this.audioVisualizing.bind(this), this.TICK);
+    this.audioIntervalID = window.setInterval(this.audioVisualizing.bind(this), this.TICK);
   }
 
   /**

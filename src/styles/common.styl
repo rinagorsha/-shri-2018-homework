@@ -1,0 +1,36 @@
+.html
+  font-size 10px
+
+  @media $more-desktop
+    font-size calc(.6vw)
+
+  @media $tablet
+    font-size 8px
+
+  @media $mobile
+    font-size 9px
+
+.body
+  min-height 100vh
+  color $textColor
+  font-family Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Helvetica, sans-serif
+  font-size 2rem
+  line-height 1.16
+  font-weight 400
+  -webkit-font-smoothing antialiased // mac fix
+  -webkit-text-stroke 1px transparent // mac fix
+  -webkit-text-size-adjust 100% // stop iphone resize when orientation landscape
+  margin 0
+  display grid
+  grid-template-rows 1fr auto
+  grid-template-columns 100%
+  transition background .3s
+
+  &_opened-video
+    background-color $textColor
+
+.root
+  min-height 100vh
+  display grid
+  grid-template-rows 1fr auto
+  grid-template-columns 100%

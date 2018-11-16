@@ -1,0 +1,52 @@
+.panel
+  &__action
+      box-shadow-params = 0 0 5px 5px
+      width 25px
+      height @width
+      background-color $grayDark
+      background-position 50%
+      background-repeat no-repeat
+      border none
+      border-radius 50%
+      opacity 0
+      visibility hidden
+      position absolute
+      right 15px
+      cursor pointer
+      transition all .3s ease
+
+      body.is-touch-device &
+        display none
+
+      @media $mobie
+        display none
+      
+      .panel:hover &
+        opacity 1
+        visibility visible
+
+      &_type_arrow
+        background-image url('./next.svg')
+        box-shadow box-shadow-params $grayDark
+        bottom 15px
+
+        @media $tablet
+          bottom 6px
+
+        &-critical
+          background-color $red
+          background-image url('./next-white.svg')
+          box-shadow box-shadow-params $red
+
+      &_type_close
+        background-image url('./cross.svg')
+        box-shadow box-shadow-params $grayDark
+        top 15px
+
+        @media $tablet
+          top 6px
+
+        &-critical
+          background-color $red
+          background-image url('./cross-white.svg')
+          box-shadow box-shadow-params $red

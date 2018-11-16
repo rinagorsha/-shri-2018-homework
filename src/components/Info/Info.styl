@@ -1,0 +1,29 @@
+.info
+  font-size 1.33rem
+  display flex
+  flex-wrap wrap
+  justify-content space-between
+  align-items center
+
+  @media $mobile
+    font-size 1.33rem
+
+  &_s
+    @media $more-tablet
+      display block
+
+  &_temperature
+    @media $mobile
+      font-size 1.56rem
+
+  &__item
+    margin-right 10px
+
+    .panel-info_s &
+      @media $more-tablet
+        margin-bottom 20px
+        margin-right 0
+
+    &:last-child
+      margin-bottom 0
+      margin-right 0
